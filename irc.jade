@@ -23,6 +23,13 @@
   .week(ng-show="panel==1"): .ib(ng-controller="ircCalendarCtrl")
     svg(width="100%",height="100%",viewbox="0 0 300 200",preserveAspectRatio="xMidYMid")
       defs
+        filter(id="dropshadow",height="130%")
+          feGaussianBlur(in="SourceAlpha",stdDeviation="0.05")
+          feOffset(dx="0",dy="0.5",result="offsetblur")
+          feMerge
+            feMergeNode
+            feMergeNode(in="SourceGraphic")
+
         linearGradient(id="github-gradient",x1="0%",y1="0%",x2="0%",y2="100%",spreadMethod="pad")
           stop(offset="0%",stop-color="#F8231E",stop-opacity="1")
           stop(offset="50%",stop-color="#C5CC96",stop-opacity="1")
@@ -44,7 +51,7 @@
                ng-attr-x2="{{hover.cur.tx}}",y2="57",stroke="#666",stroke-width="0.5px",stroke-dasharray="2 2")
           text(ng-attr-x="{{hover.cur.tx}}",y="60") {{hover.cur.d}} x {{hover.cur.v}} 人
           text(ng-attr-x="{{hover.cur.tx}}",y="65") {{hover.cur.event}}
-        g(transform="translate(0 70)")
+        g(transform="translate(0 70)") 
           rect.grid(x="1",y="-1",width="282",height="22")
           line.grid(ng-repeat="y in [0,5,10,15,20]",x1="2",x2="282",ng-attr-y1="{{y}}",ng-attr-y2="{{y}}")
           line.grid(ng-repeat="(k,v) in mHash",ng-attr-x1="{{v}}",ng-attr-x2="{{v}}",y1="0",y2="20")

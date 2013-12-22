@@ -78,7 +78,7 @@ ircCountCtrl = function($scope, $element){
     }, 0);
   });
 };
-ircCalendarCtrl = function($scope){
+ircCalendarCtrl = function($scope, $element){
   import$($scope, {
     lineChart: "M0,0",
     th: ['一', '二', '三', '四', '五', '六', '日'],
@@ -100,6 +100,13 @@ ircCalendarCtrl = function($scope){
         d: "-"
       },
       setter: null,
+      loc: function(e){
+        var n, w, i;
+        n = $(e.currentTarget);
+        w = 1440 * e.currentTarget.getBBox().width / 300.0;
+        i = parseInt(300 * (e.clientX - n.offset().left) / w);
+        return this.set($scope.date[i]);
+      },
       set: function(it){
         var this$ = this;
         if (!it) {

@@ -31,7 +31,7 @@ ircCountCtrl = ($scope, $element) ->
   $scope.nick = bubble.nodes({children:data.by_nick.map -> {name:it.0, value:it.1}})filter ->!it.children
   $scope.sum = $scope.nick.reduce (-> &0 + &1.value), 0
 
-ircCalendarCtrl = ($scope) ->
+ircCalendarCtrl = ($scope, $element) ->
   $scope <<< do
     line-chart: "M0,0"
     th: <[一 二 三 四 五 六 日]>
@@ -49,6 +49,12 @@ ircCalendarCtrl = ($scope) ->
       map: d3.scale.linear!domain [0 300] .range [50 250]
       cur: {v: 0, d: "-"}
       setter: null
+      loc: (e) ->
+        # wrong answer
+        n = $(e.currentTarget)
+        w = 1440 * e.currentTarget.getBBox!.width / 300.0
+        i = parseInt(300 * (e.clientX - n.offset!left) / w)
+        @set $scope.date[i]
       set: ->
         if !it =>
           @setter = setTimeout ~>
