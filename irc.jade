@@ -1,0 +1,64 @@
+#irc(ng-show="tab=='irc'",ng-controller="ircCtrl")
+  .next(ng-click="setPanel(1)")
+  .prev(ng-click="setPanel(-1)")
+  .count(ng-show="panel==0"): .ib(ng-controller="ircCountCtrl")
+    svg(width="100%",height="100%",viewbox="0 0 200 200",preserveAspectRatio="xMidYMid")
+      g
+        text.title(x="0",y="20") 聊天室發言量
+        text.subtitle(x="0",y="30") 自 2012 年 11 月 5 日起
+        text.subtitle(x="0",y="35") 共 {{nick.length}} 人發言，累計 {{sum}} 句話
+      g: g(ng-repeat="n in nick",transform="translate(20 0)",ng-mouseover="hover($event,n)")
+        circle(ng-attr-cx="{{n.x||0}}",ng-attr-cy="{{n.y||0}}",ng-attr-r="{{n.r||0}}",ng-attr-fill="{{color(n.name)}}")
+        text(ng-attr-x="{{n.x}}",ng-attr-y="{{n.y}}",ng-attr-font-size="{{n.r/n.name.length}}",ng-show="n.r/n.name.length>0.7") {{n.name}}
+        text(ng-attr-x="{{n.x}}",ng-attr-y="{{n.y + 4}}",ng-attr-font-size="{{n.r/n.name.length/2}}",ng-show="n.r>6&&n.r/n.name.length>0.5") {{n.value}}
+      g.hint(ng-show="cur.y>0")
+        line(
+          ng-attr-x1="{{cur.lx1||0}}", ng-attr-x2="{{cur.lx2||0}}",
+          ng-attr-y1="{{cur.ly1||0}}", ng-attr-y2="{{cur.ly2||0}}",
+          stroke="#777",stroke-dasharray="1 1",stroke-width="0.5px"
+        )
+        text(ng-attr-x="{{cur.tx}}",ng-attr-y="{{cur.ty}}") {{cur.name}}
+        text(ng-attr-x="{{cur.tx}}",ng-attr-y="{{cur.ty+5}}",style="font-size:2px") {{cur.value}}次發言
+
+  .week(ng-show="panel==1"): .ib(ng-controller="ircCalendarCtrl")
+    svg(width="100%",height="100%",viewbox="0 0 300 200",preserveAspectRatio="xMidYMid")
+      defs
+        linearGradient(id="github-gradient",x1="0%",y1="0%",x2="0%",y2="100%",spreadMethod="pad")
+          stop(offset="0%",stop-color="#F8231E",stop-opacity="1")
+          stop(offset="50%",stop-color="#C5CC96",stop-opacity="1")
+          stop(offset="100%",stop-color="#3E53F8",stop-opacity="1")
+      g(transform="translate(30 20)")
+        text.title 聊天室每日概況
+        text.subtitle.left-align(x="40") 自 {{dayFrom}} 至 {{dayTil}}，按周分類的每天發言量
+      g(transform="translate(15 35)")
+        g: text.week-label(ng-attr-y="{{$index * 7 + 5}}",x="-4",ng-repeat="w in th") {{w}}
+        g(ng-repeat="d in date")
+          rect.heatblock(ng-attr-x="{{d.x}}",ng-attr-y="{{d.y}}",width="6px",height="6px",
+          ng-attr-fill="{{heatColor(d.v)}}",ng-mouseover="hover.set(d)",ng-mouseout="hover.set(null)")
+        g.year-ptr(ng-repeat="(k,v) in yHash")
+          text(ng-attr-x="{{v + 3}}",y="-2") {{k}}
+        g.month-ptr(ng-repeat="(k,v) in mHash")
+          text(ng-attr-x="{{v + 3}}",y="53") {{k}}
+        g.hover(ng-show="hover.cur.v")
+          line(ng-attr-x1="{{hover.cur.x + 3}}",ng-attr-y1="{{hover.cur.y + 5}}",
+               ng-attr-x2="{{hover.cur.tx}}",y2="57",stroke="#666",stroke-width="0.5px",stroke-dasharray="2 2")
+          text(ng-attr-x="{{hover.cur.tx}}",y="60") {{hover.cur.d}} x {{hover.cur.v}} 人
+          text(ng-attr-x="{{hover.cur.tx}}",y="65") {{hover.cur.event}}
+        g(transform="translate(0 70)")
+          rect.grid(x="1",y="-1",width="282",height="22")
+          line.grid(ng-repeat="y in [0,5,10,15,20]",x1="2",x2="282",ng-attr-y1="{{y}}",ng-attr-y2="{{y}}")
+          line.grid(ng-repeat="(k,v) in mHash",ng-attr-x1="{{v}}",ng-attr-x2="{{v}}",y1="0",y2="20")
+          line.grid(x1="282",x2="282",y1="0",y2="20")
+          path(ng-attr-d="{{lineChart}}",stroke-width="0.5",fill="none",stroke="url(#github-gradient)")
+          g(ng-attr-transform="translate({{hover.cur.lx}} 0)",ng-show="hover.cur.v")
+            line.ptr(x1="0",x2="0",y1="-1",y2="21")
+            circle.ptr(cx="0",ng-attr-cy="{{hover.cur.ly}}",r="1")
+
+    .irc-panel
+      .status
+        | [nobody(+i)] [2:freenode.net/#g0v.tw(+s)] [Act: 9,10,12,
+        span(style="color:#f09") 17
+        | ,19,21]
+      .prompt
+        | [#g0v.tw]
+

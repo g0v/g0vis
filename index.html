@@ -43,57 +43,79 @@
       <div id="irc" ng-show="tab=='irc'" ng-controller="ircCtrl">
         <div ng-click="setPanel(1)" class="next"></div>
         <div ng-click="setPanel(-1)" class="prev"></div>
-        <div ng-show="panel==0" class="ib">
-          <svg width="100%" height="100%" viewbox="0 0 200 200" preserveAspectRatio="xMidYMid">
-            <g>
-              <text x="0" y="20" class="title">聊天室發言量</text>
-              <text x="0" y="30" class="subtitle">自 2012 年 11 月 5 日起</text>
-              <text x="0" y="35" class="subtitle">共 {{nick.length}} 人發言，累計 {{talkSum}} 句話</text>
-            </g>
-            <g ng-show="hoverItem.y&gt;0" class="hint">
-              <line ng-attr-x1="{{hoverItem.x + 20||0}}" ng-attr-x2="{{hoverItem.lx||0}}" ng-attr-y1="{{hoverItem.y||0}}" ng-attr-y2="{{hoverItem.ly||0}}" stroke="#777" stroke-dasharray="1 1" stroke-width="0.5px"></line>
-              <text ng-attr-x="{{hoverItem.tx}}" ng-attr-y="{{hoverItem.ty}}">{{hoverItem.name}}</text>
-              <text ng-attr-x="{{hoverItem.tx}}" ng-attr-y="{{hoverItem.ty+5}}" style="font-size:2px">{{hoverItem.value}}次發言</text>
-            </g>
-            <g>
-              <g ng-repeat="n in nick" transform="translate(20 0)" ng-mouseover="hover($event,n)">
-                <circle ng-attr-cx="{{n.x||0}}" ng-attr-cy="{{n.y||0}}" ng-attr-r="{{n.r||0}}" ng-attr-fill="{{aux.color(n.name)}}"></circle>
-                <text ng-attr-x="{{n.x}}" ng-attr-y="{{n.y}}" ng-attr-font-size="{{n.r/n.name.length}}" ng-show="n.r/n.name.length&gt;0.7">{{n.name}}</text>
-                <text ng-attr-x="{{n.x}}" ng-attr-y="{{n.y + 4}}" ng-attr-font-size="{{n.r/n.name.length/2}}" ng-show="n.r&gt;6&amp;&amp;n.r/n.name.length&gt;0.5">{{n.value}}</text>
-              </g>
-            </g>
-          </svg>
-        </div>
-        <div ng-show="panel==1" class="week ib">
-          <svg width="100%" height="100%" viewbox="0 0 300 200" preserveAspectRatio="xMidYMid">
-            <g transform="translate(30 20)">
-              <text class="title">聊天室每日概況</text>
-              <text x="40" class="subtitle left-align">自 {{week.dayFrom}} 至 {{week.dayTil}}，按周分類的每天發言量</text>
-            </g>
-            <g transform="translate(15 35)">
+        <div ng-show="panel==0" class="count">
+          <div ng-controller="ircCountCtrl" class="ib">
+            <svg width="100%" height="100%" viewbox="0 0 200 200" preserveAspectRatio="xMidYMid">
               <g>
-                <text ng-attr-y="{{$index * 7 + 5}}" x="-4" ng-repeat="w in week.th" class="week-label">{{w}}</text>
+                <text x="0" y="20" class="title">聊天室發言量</text>
+                <text x="0" y="30" class="subtitle">自 2012 年 11 月 5 日起</text>
+                <text x="0" y="35" class="subtitle">共 {{nick.length}} 人發言，累計 {{sum}} 句話</text>
               </g>
-              <g ng-repeat="d in date">
-                <rect ng-attr-x="{{d.x}}" ng-attr-y="{{d.y}}" width="6px" height="6px" ng-attr-fill="{{heatColor(d.v)}}" ng-mouseover="week.hover.set(d)" ng-mouseout="week.hover.set(null)" class="heatblock"></rect>
+              <g>
+                <g ng-repeat="n in nick" transform="translate(20 0)" ng-mouseover="hover($event,n)">
+                  <circle ng-attr-cx="{{n.x||0}}" ng-attr-cy="{{n.y||0}}" ng-attr-r="{{n.r||0}}" ng-attr-fill="{{color(n.name)}}"></circle>
+                  <text ng-attr-x="{{n.x}}" ng-attr-y="{{n.y}}" ng-attr-font-size="{{n.r/n.name.length}}" ng-show="n.r/n.name.length&gt;0.7">{{n.name}}</text>
+                  <text ng-attr-x="{{n.x}}" ng-attr-y="{{n.y + 4}}" ng-attr-font-size="{{n.r/n.name.length/2}}" ng-show="n.r&gt;6&amp;&amp;n.r/n.name.length&gt;0.5">{{n.value}}</text>
+                </g>
               </g>
-              <g ng-repeat="(k,v) in week.yHash" class="year-ptr">
-                <text ng-attr-x="{{v + 3}}" y="-2">{{k}}</text>
+              <g ng-show="cur.y&gt;0" class="hint">
+                <line ng-attr-x1="{{cur.lx1||0}}" ng-attr-x2="{{cur.lx2||0}}" ng-attr-y1="{{cur.ly1||0}}" ng-attr-y2="{{cur.ly2||0}}" stroke="#777" stroke-dasharray="1 1" stroke-width="0.5px"></line>
+                <text ng-attr-x="{{cur.tx}}" ng-attr-y="{{cur.ty}}">{{cur.name}}</text>
+                <text ng-attr-x="{{cur.tx}}" ng-attr-y="{{cur.ty+5}}" style="font-size:2px">{{cur.value}}次發言</text>
               </g>
-              <g ng-repeat="(k,v) in week.mHash" class="month-ptr">
-                <text ng-attr-x="{{v + 3}}" y="53">{{k}}</text>
-              </g>
-              <g ng-show="week.hover.cur.v" class="hover">
-                <line ng-attr-x1="{{week.hover.cur.x + 3}}" ng-attr-y1="{{week.hover.cur.y + 5}}" ng-attr-x2="{{week.hover.cur.tx}}" y2="57" stroke="#666" stroke-width="0.5px" stroke-dasharray="2 2"></line>
-                <text ng-attr-x="{{week.hover.cur.tx}}" y="60">{{week.hover.cur.d}} x {{week.hover.cur.v}} 人</text>
-                <text ng-attr-x="{{week.hover.cur.tx}}" y="65">{{week.hover.cur.event}}</text>
-              </g>
-            </g>
-          </svg>
+            </svg>
+          </div>
         </div>
-        <div class="irc-panel">
-          <div class="status">[nobody(+i)] [2:freenode.net/#g0v.tw(+s)] [Act: 9,10,12,<span style="color:#f09">17</span>,19,21]</div>
-          <div class="prompt">[#g0v.tw]</div>
+        <div ng-show="panel==1" class="week">
+          <div ng-controller="ircCalendarCtrl" class="ib">
+            <svg width="100%" height="100%" viewbox="0 0 300 200" preserveAspectRatio="xMidYMid">
+              <defs>
+                <linearGradient id="github-gradient" x1="0%" y1="0%" x2="0%" y2="100%" spreadMethod="pad">
+                  <stop offset="0%" stop-color="#F8231E" stop-opacity="1"></stop>
+                  <stop offset="50%" stop-color="#C5CC96" stop-opacity="1"></stop>
+                  <stop offset="100%" stop-color="#3E53F8" stop-opacity="1"></stop>
+                </linearGradient>
+              </defs>
+              <g transform="translate(30 20)">
+                <text class="title">聊天室每日概況</text>
+                <text x="40" class="subtitle left-align">自 {{dayFrom}} 至 {{dayTil}}，按周分類的每天發言量</text>
+              </g>
+              <g transform="translate(15 35)">
+                <g>
+                  <text ng-attr-y="{{$index * 7 + 5}}" x="-4" ng-repeat="w in th" class="week-label">{{w}}</text>
+                </g>
+                <g ng-repeat="d in date">
+                  <rect ng-attr-x="{{d.x}}" ng-attr-y="{{d.y}}" width="6px" height="6px" ng-attr-fill="{{heatColor(d.v)}}" ng-mouseover="hover.set(d)" ng-mouseout="hover.set(null)" class="heatblock"></rect>
+                </g>
+                <g ng-repeat="(k,v) in yHash" class="year-ptr">
+                  <text ng-attr-x="{{v + 3}}" y="-2">{{k}}</text>
+                </g>
+                <g ng-repeat="(k,v) in mHash" class="month-ptr">
+                  <text ng-attr-x="{{v + 3}}" y="53">{{k}}</text>
+                </g>
+                <g ng-show="hover.cur.v" class="hover">
+                  <line ng-attr-x1="{{hover.cur.x + 3}}" ng-attr-y1="{{hover.cur.y + 5}}" ng-attr-x2="{{hover.cur.tx}}" y2="57" stroke="#666" stroke-width="0.5px" stroke-dasharray="2 2"></line>
+                  <text ng-attr-x="{{hover.cur.tx}}" y="60">{{hover.cur.d}} x {{hover.cur.v}} 人</text>
+                  <text ng-attr-x="{{hover.cur.tx}}" y="65">{{hover.cur.event}}</text>
+                </g>
+                <g transform="translate(0 70)">
+                  <rect x="1" y="-1" width="282" height="22" class="grid"></rect>
+                  <line ng-repeat="y in [0,5,10,15,20]" x1="2" x2="282" ng-attr-y1="{{y}}" ng-attr-y2="{{y}}" class="grid"></line>
+                  <line ng-repeat="(k,v) in mHash" ng-attr-x1="{{v}}" ng-attr-x2="{{v}}" y1="0" y2="20" class="grid"></line>
+                  <line x1="282" x2="282" y1="0" y2="20" class="grid"></line>
+                  <path ng-attr-d="{{lineChart}}" stroke-width="0.5" fill="none" stroke="url(#github-gradient)"></path>
+                  <g ng-attr-transform="translate({{hover.cur.lx}} 0)" ng-show="hover.cur.v">
+                    <line x1="0" x2="0" y1="-1" y2="21" class="ptr"></line>
+                    <circle cx="0" ng-attr-cy="{{hover.cur.ly}}" r="1" class="ptr"></circle>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            <div class="irc-panel">
+              <div class="status">[nobody(+i)] [2:freenode.net/#g0v.tw(+s)] [Act: 9,10,12,<span style="color:#f09">17</span>,19,21]</div>
+              <div class="prompt">[#g0v.tw]</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

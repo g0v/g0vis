@@ -86,3 +86,18 @@ html, body {
   font-size: 3px;
   fill: black;
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.2); }
+#irc .week line.grid {
+  stroke: #cccccc;
+  stroke-width: 0.2;
+  stroke-dasharray: 1 1; }
+#irc .week rect.grid {
+  fill: white;
+  stroke: #999999;
+  stroke-width: 0.5; }
+#irc .week line.ptr {
+  stroke: #ee0022;
+  stroke-width: 0.4; }
+#irc .week circle.ptr {
+  stroke: #ee0022;
+  stroke-width: 0.4;
+  fill: rgba(255, 255, 255, 0.8); }
