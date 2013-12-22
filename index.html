@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> </title>
+    <meta charset="utf-8">
+    <!-- libraries-->
+    <script type="text/javascript" src="assets/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/d3js/3.3.11/d3.v3.min.js"></script>
+    <script type="text/javascript" src="assets/angular/1.2.3/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script type="text/javascript" src="assets/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <!-- custom files-->
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap/3.0.2/theme/bootstrap.yeti.min.css">
+    <script type="text/javascript" src="assets/moment/2.4.0/moment.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+  </head>
+  <body ng-app ng-controller="mainCtrl">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="ib">
+        <div class="navbar-header"><a href="#" class="navbar-brand">G0VIS</a></div>
+        <ul class="nav navbar-nav">
+          <li ng-repeat="n in tabs" ng-class="tabClass(n[0])"><a href="#" ng-click="setTab(n[0])">{{n[1]}}</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><i class="glyphicon glyphicon-check"></i> 沒有人</a></li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="glyphicon glyphicon-cog"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="#"><i style="float:right" class="glyphicon glyphicon-cog"></i>沒有人的設定</a></li>
+              <li class="divider"></li>
+              <li><a href="#"><i style="float:right" class="glyphicon glyphicon-log-out"></i>沒有人要登出</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="content">
+      <div id="about" ng-show="tab=='about'"></div>
+      <div id="timeline" ng-show="tab=='timeline'">
+        <iframe src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&amp;font=Bevan-PotanoSans&amp;maptype=toner&amp;lang=zh-tw&amp;height=650" width="100%" height="650" frameborder="0"></iframe>
+      </div>
+      <div id="project" ng-show="tab=='project'"></div>
+      <div id="irc" ng-show="tab=='irc'" ng-controller="ircCtrl">
+        <div ng-click="setPanel(1)" class="next"></div>
+        <div ng-click="setPanel(-1)" class="prev"></div>
+        <div ng-show="panel==0" class="ib">
+          <svg width="100%" height="100%" viewbox="0 0 200 200" preserveAspectRatio="xMidYMid">
+            <g>
+              <text x="0" y="20" class="title">聊天室發言量</text>
+              <text x="0" y="30" class="subtitle">自 2012 年 11 月 5 日起</text>
+              <text x="0" y="35" class="subtitle">共 {{nick.length}} 人發言，累計 {{talkSum}} 句話</text>
+            </g>
+            <g ng-show="hoverItem.y&gt;0" class="hint">
+              <line ng-attr-x1="{{hoverItem.x + 20||0}}" ng-attr-x2="{{hoverItem.lx||0}}" ng-attr-y1="{{hoverItem.y||0}}" ng-attr-y2="{{hoverItem.ly||0}}" stroke="#777" stroke-dasharray="1 1" stroke-width="0.5px"></line>
+              <text ng-attr-x="{{hoverItem.tx}}" ng-attr-y="{{hoverItem.ty}}">{{hoverItem.name}}</text>
+              <text ng-attr-x="{{hoverItem.tx}}" ng-attr-y="{{hoverItem.ty+5}}" style="font-size:2px">{{hoverItem.value}}次發言</text>
+            </g>
+            <g>
+              <g ng-repeat="n in nick" transform="translate(20 0)" ng-mouseover="hover($event,n)">
+                <circle ng-attr-cx="{{n.x||0}}" ng-attr-cy="{{n.y||0}}" ng-attr-r="{{n.r||0}}" ng-attr-fill="{{aux.color(n.name)}}"></circle>
+                <text ng-attr-x="{{n.x}}" ng-attr-y="{{n.y}}" ng-attr-font-size="{{n.r/n.name.length}}" ng-show="n.r/n.name.length&gt;0.7">{{n.name}}</text>
+                <text ng-attr-x="{{n.x}}" ng-attr-y="{{n.y + 4}}" ng-attr-font-size="{{n.r/n.name.length/2}}" ng-show="n.r&gt;6&amp;&amp;n.r/n.name.length&gt;0.5">{{n.value}}</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div ng-show="panel==1" class="week ib">
+          <svg width="100%" height="100%" viewbox="0 0 300 200" preserveAspectRatio="xMidYMid">
+            <g transform="translate(30 20)">
+              <text class="title">聊天室每日概況</text>
+              <text x="40" class="subtitle left-align">自 {{week.dayFrom}} 至 {{week.dayTil}}，按周分類的每天發言量</text>
+            </g>
+            <g transform="translate(15 35)">
+              <g>
+                <text ng-attr-y="{{$index * 7 + 5}}" x="-4" ng-repeat="w in week.th" class="week-label">{{w}}</text>
+              </g>
+              <g ng-repeat="d in date">
+                <rect ng-attr-x="{{d.x}}" ng-attr-y="{{d.y}}" width="6px" height="6px" ng-attr-fill="{{heatColor(d.v)}}" ng-mouseover="week.hover.set(d)" ng-mouseout="week.hover.set(null)" class="heatblock"></rect>
+              </g>
+              <g ng-repeat="(k,v) in week.yHash" class="year-ptr">
+                <text ng-attr-x="{{v + 3}}" y="-2">{{k}}</text>
+              </g>
+              <g ng-repeat="(k,v) in week.mHash" class="month-ptr">
+                <text ng-attr-x="{{v + 3}}" y="53">{{k}}</text>
+              </g>
+              <g ng-show="week.hover.cur.v" class="hover">
+                <line ng-attr-x1="{{week.hover.cur.x + 3}}" ng-attr-y1="{{week.hover.cur.y + 5}}" ng-attr-x2="{{week.hover.cur.tx}}" y2="57" stroke="#666" stroke-width="0.5px" stroke-dasharray="2 2"></line>
+                <text ng-attr-x="{{week.hover.cur.tx}}" y="60">{{week.hover.cur.d}} x {{week.hover.cur.v}} 人</text>
+                <text ng-attr-x="{{week.hover.cur.tx}}" y="65">{{week.hover.cur.event}}</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="irc-panel">
+          <div class="status">[nobody(+i)] [2:freenode.net/#g0v.tw(+s)] [Act: 9,10,12,<span style="color:#f09">17</span>,19,21]</div>
+          <div class="prompt">[#g0v.tw]</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
