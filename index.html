@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="stylesheet" type="text/css" href="assets/bootstrap/3.0.2/theme/bootstrap.yeti.min.css">
     <script type="text/javascript" src="assets/moment/2.4.0/moment.min.js"></script>
+    <script type="text/javascript" src="assets/colorbrewer/colorbrewer.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body ng-app ng-controller="mainCtrl">
@@ -37,7 +38,7 @@
     <div id="content">
       <div id="about" ng-show="tab=='about'"></div>
       <div id="timeline" ng-show="tab=='timeline'">
-        <iframe src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&amp;font=Bevan-PotanoSans&amp;maptype=toner&amp;lang=zh-tw&amp;height=650" width="100%" height="650" frameborder="0"></iframe>
+        <!--iframe(src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&font=Bevan-PotanoSans&maptype=toner&lang=zh-tw&height=650",width="100%",height="650",frameborder="0")-->
       </div>
       <div id="project" ng-show="tab=='project'"></div>
       <div id="irc" ng-show="tab=='irc'" ng-controller="ircCtrl">
@@ -116,6 +117,38 @@
                     <line x1="0" x2="0" y1="-1" y2="21" class="ptr"></line>
                     <circle cx="0" ng-attr-cy="{{hover.cur.ly}}" r="1" class="ptr"></circle>
                   </g>
+                  <text y="-5" class="subtitle">走勢圖</text>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div ng-show="panel==2" class="relation">
+          <div ng-controller="ircRelationCtrl" class="ib">
+            <svg width="100%" height="100%" viewbox="0 0 300 200" preserveAspectRatio="xMidYMid">
+              <g transform="translate(10 0)">
+                <g transform="translate(0 0)" class="graph">
+                  <line ng-repeat="n in links" ng-attr-x1="{{n.source.x}}" ng-attr-y1="{{n.source.y}}" ng-attr-x2="{{n.target.x}}" ng-attr-y2="{{n.target.y}}"></line>
+                </g>
+                <g transform="translate(0 0)" class="graph">
+                  <circle ng-repeat="n in nodes" ng-attr-r="{{n.r}}" ng-attr-fill="{{color(n)}}" ng-attr-cx="{{n.x}}" ng-attr-cy="{{n.y}}" ng-class="hover.near(n)" ng-mouseover="hover.set(n)" ng-mouseout="hover.set(null)"></circle>
+                </g>
+                <g transform="translate(35 35)" class="active-nicks">
+                  <text class="title">活躍人物列表</text>
+                  <g ng-repeat="n in nodesActive">
+                    <line ng-attr-x1="{{10}}" ng-attr-y1="{{$index*5+7}}" ng-attr-x2="{{n.x - 35 - n.r}}" ng-attr-y2="{{n.y - 35}}" ng-show="n.hover"></line>
+                    <text ng-attr-y="{{$index*5+7}}" ng-mouseover="hover.set(n)" ng-mouseout="hover.set(null)" class="name">{{n.name}} ( {{n.charge}} )</text>
+                  </g>
+                </g>
+                <g transform="translate(30 20)">
+                  <text class="title">對話關係圖</text>
+                  <text x="50" class="subtitle left-align">各別暱稱間的互動關係</text>
+                </g>
+                <g transform="translate(250 30)" ng-show="hover.cur" class="relate-nicks">
+                  <text class="title">{{hover.cur.name}}</text>
+                  <text y="6">與下面這些人對話過</text>
+                  <text ng-repeat="n in hover.neighbor" ng-attr-y="{{$index*5 + 12}}">{{n.name}}</text>
+                  <text y="117" ng-show="hover.neighbor.length&gt;20">and more...</text>
                 </g>
               </g>
             </svg>

@@ -7,8 +7,8 @@ mainCtrl = ($scope, $http) ->
 
 ircCtrl = ($scope, $http, $element) ->
   $scope <<< do
-    panel: 1
-    set-panel: (d) -> $scope.panel = ($scope.panel + d + 2)%2
+    panel: 2
+    set-panel: (d) -> $scope.panel = ($scope.panel + d + 3)%3
     color: d3.scale.category20!
   $http.get \g0v-count.json .success (data)->
     $scope.$broadcast \data.ready, data
@@ -95,3 +95,61 @@ ircCalendarCtrl = ($scope, $element) ->
   $scope.date.map (d,i) ->
     d.lx = x-map i
     d.ly = y-map d.v
+
+ircRelationCtrl = ($scope, $element) ->
+  $scope <<< do
+    nodes: []
+    links: []
+    color-func: d3.scale.ordinal!range colorbrewer.Paired.12
+    #color-func: d3.scale.category10!
+    color: ->
+      if $scope.hover.cur and !it.hover => \#e0e0e0
+      else @color-func it.name
+  (e, data) <- $scope.$on \data.ready
+  [w,h] = [300 200]
+  data = data.by_nick_to
+  force = d3.layout.force!
+  hash = {}
+  for it of data
+    it2 = it.toLowerCase!
+    for jt of data[it] =>
+      jt = jt.toLowerCase!trim!
+      if not (jt of hash) => hash[jt] = {name: jt, charge: 1}
+    hash[it2] = {name: it2, d: data[it], charge: 1}
+  nodes = [it for it of hash]map (d,i) -> hash[d].index = i; hash[d]
+  nodes.sort (a,b) -> if a.name > b.name => 1 else if a.name==b.name => 0 else -1
+  links = []
+  for it in nodes
+    for jt in [x for x of it.d]sort((a,b) -> it.d[a] - it.d[b])[0 to 2]
+      continue if not jt
+      jt = jt.toLowerCase!trim!
+      links.push source: hash[it.name], target: hash[jt]
+      hash[jt]charge++
+  $scope.links = links
+  nodes.map ->
+    it.v = it.charge
+    it.r = (Math.sqrt it.charge)>?1
+  force.nodes nodes .links links .size [300 170] .gravity 3.5 .charge(-> -(it.charge**2) - 30)start!
+  $scope.nodes = nodes
+  $scope.nodes-active = nodes.filter(-> it.charge>5)sort((a,b) -> b.charge - a.charge)[0 to 20]
+  $scope.hover = do
+    cur: null
+    neighbor: []
+    near: -> ["" "active" "near"][it.hover]
+    hl: (n, v) ->
+      n.hover = v
+    set: (d) ->
+      if @cur =>
+        links.map ~>
+          if it.source==@cur => it.target.hover = 0
+          if it.target==@cur => it.source.hover = 0
+        @cur.hover = 0
+      @cur = d
+      if @cur =>
+        links.map ~>
+          if it.source==@cur => it.target.hover = 2
+          if it.target==@cur => it.source.hover = 2
+        @cur.hover = 1
+      @neighbor = nodes.filter(-> it.hover==2)
+      if @neighbor.length > 20 => @neighbor = @neighbor[0 to 20]
+  force.on \tick -> $scope.$apply!

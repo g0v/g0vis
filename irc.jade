@@ -60,6 +60,35 @@
           g(ng-attr-transform="translate({{hover.cur.lx}} 0)",ng-show="hover.cur.v")
             line.ptr(x1="0",x2="0",y1="-1",y2="21")
             circle.ptr(cx="0",ng-attr-cy="{{hover.cur.ly}}",r="1")
+          text.subtitle(y="-5") 走勢圖
+
+  .relation(ng-show="panel==2"): .ib(ng-controller="ircRelationCtrl")
+    //-select#relation-names(ng-change="update()")
+      option
+      option(ng-repeat="n in nodes",ng-attr-value="{{n.name}}") {{n.name}}
+    svg(width="100%",height="100%",viewbox="0 0 300 200",preserveAspectRatio="xMidYMid")
+      g(transform="translate(10 0)")
+        g.graph(transform="translate(0 0)")
+          line(ng-repeat="n in links",
+            ng-attr-x1="{{n.source.x}}",ng-attr-y1="{{n.source.y}}",
+            ng-attr-x2="{{n.target.x}}",ng-attr-y2="{{n.target.y}}")
+        g.graph(transform="translate(0 0)")
+          circle(ng-repeat="n in nodes",ng-attr-r="{{n.r}}",ng-attr-fill="{{color(n)}}",
+          ng-attr-cx="{{n.x}}",ng-attr-cy="{{n.y}}",ng-class="hover.near(n)",
+          ng-mouseover="hover.set(n)",ng-mouseout="hover.set(null)")
+        g.active-nicks(transform="translate(35 35)")
+          text.title 活躍人物列表
+          g(ng-repeat="n in nodesActive")
+            line(ng-attr-x1="{{10}}",ng-attr-y1="{{$index*5+7}}",ng-attr-x2="{{n.x - 35 - n.r}}",ng-attr-y2="{{n.y - 35}}",ng-show="n.hover")
+            text.name(ng-attr-y="{{$index*5+7}}",ng-mouseover="hover.set(n)",ng-mouseout="hover.set(null)") {{n.name}} ( {{n.charge}} )
+        g(transform="translate(30 20)")
+          text.title 對話關係圖
+          text.subtitle.left-align(x="50") 各別暱稱間的互動關係
+        g.relate-nicks(transform="translate(250 30)",ng-show="hover.cur")
+          text.title {{hover.cur.name}}
+          text(y="6") 與下面這些人對話過
+          text(ng-repeat="n in hover.neighbor",ng-attr-y="{{$index*5 + 12}}") {{n.name}}
+          text(y="117",ng-show="hover.neighbor.length>20") and more...
 
     .irc-panel
       .status

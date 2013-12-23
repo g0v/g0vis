@@ -17,7 +17,7 @@ html, body {
     line-height: 15px;
     padding: 7px 15px; }
 
-#irc circle:hover {
+#irc .count circle:hover {
   stroke: red;
   stroke-width: 1px; }
 #irc text {
@@ -92,7 +92,6 @@ html, body {
   stroke-dasharray: 1 1; }
 #irc .week rect.grid {
   fill: white;
-  stroke: #999999;
   stroke-width: 0.5; }
 #irc .week line.ptr {
   stroke: #ee0022;
@@ -101,3 +100,38 @@ html, body {
   stroke: #ee0022;
   stroke-width: 0.4;
   fill: rgba(255, 255, 255, 0.8); }
+#irc .relation select {
+  position: absolute;
+  top: 14%;
+  left: 50%; }
+#irc .relation .active-nicks line {
+  stroke-width: 0.4px;
+  stroke-dasharray: 1 1;
+  stroke: red; }
+#irc .relation .active-nicks text.title {
+  font-size: 5px;
+  fill: black;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.4); }
+#irc .relation .active-nicks text.name {
+  font-size: 2px;
+  fill: black;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2); }
+#irc .relation .graph circle.active {
+  stroke: red;
+  stroke-width: 1px;
+  fill: white; }
+#irc .relation .graph circle.near {
+  stroke: blue;
+  stroke-width: 0px; }
+#irc .relation .graph line {
+  stroke-dasharray: 1 1;
+  stroke: #dddddd;
+  stroke-width: 0.2px; }
+#irc .relation .relate-nicks text {
+  font-size: 2px;
+  fill: black;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.2); }
+#irc .relation .relate-nicks text.title {
+  font-size: 8px;
+  text-anchor: middle;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.3); }

@@ -13,6 +13,7 @@ html
     link(rel="stylesheet",type="text/css",href="index.css")
     link(rel="stylesheet",type="text/css",href="assets/bootstrap/3.0.2/theme/bootstrap.yeti.min.css")
     script(type="text/javascript",src="assets/moment/2.4.0/moment.min.js")
+    script(type="text/javascript",src="assets/colorbrewer/colorbrewer.js")
     script(type="text/javascript",src="index.js")
   body(ng-app, ng-controller="mainCtrl")
     .navbar.navbar-inverse.navbar-fixed-top
@@ -39,6 +40,6 @@ html
     #content
       #about(ng-show="tab=='about'")
       #timeline(ng-show="tab=='timeline'")
-        iframe(src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&font=Bevan-PotanoSans&maptype=toner&lang=zh-tw&height=650",width="100%",height="650",frameborder="0")
+        //iframe(src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&font=Bevan-PotanoSans&maptype=toner&lang=zh-tw&height=650",width="100%",height="650",frameborder="0")
       #project(ng-show="tab=='project'")
       include irc.jade

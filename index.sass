@@ -18,9 +18,10 @@ html,body
     padding: 7px 15px
   
 #irc
-  circle:hover
-    stroke: #f00
-    stroke-width: 1px
+  .count
+    circle:hover
+      stroke: #f00
+      stroke-width: 1px
   text
     cursor: pointer
     user-select: none
@@ -95,7 +96,7 @@ html,body
       stroke-dasharray: 1 1
     rect.grid
       fill: #fff
-      stroke: #999
+      //stroke: #999
       stroke-width: 0.5
     line.ptr
       stroke: #e02
@@ -104,3 +105,42 @@ html,body
       stroke: #e02
       stroke-width: 0.4
       fill: rgba(255,255,255,0.8)
+  .relation
+    select
+      position: absolute
+      top: 14%
+      left: 50%
+    .active-nicks
+      line
+        stroke-width: 0.4px
+        stroke-dasharray: 1 1
+        stroke: #f00
+      text.title
+        font-size: 5px
+        fill: #000
+        text-shadow: 0 0 2px rgba(0,0,0,0.4)
+      text.name
+        font-size: 2px
+        fill: #000
+        text-shadow: 0 0 1px rgba(0,0,0,0.2)
+    .graph
+      circle.active
+        stroke: #f00
+        stroke-width: 1.0px
+        fill: #fff
+      circle.near
+        stroke: #00f
+        stroke-width: 0.0px
+      line
+        stroke-dasharray: 1 1
+        stroke: #ddd
+        stroke-width: 0.2px
+    .relate-nicks
+      text
+        font-size: 2px
+        fill: #000
+        text-shadow: 0 0 1px rgba(0,0,0,0.2)
+      text.title
+        font-size: 8px
+        text-anchor: middle
+        text-shadow: 0 0 2px rgba(0,0,0,0.3)
