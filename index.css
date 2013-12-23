@@ -105,9 +105,13 @@ html, body {
   top: 14%;
   left: 50%; }
 #irc .relation .active-nicks line {
-  stroke-width: 0.4px;
-  stroke-dasharray: 1 1;
+  stroke-dasharray: 1 1; }
+#irc .relation .active-nicks line.active {
+  stroke-width: 0.7px;
   stroke: red; }
+#irc .relation .active-nicks line.near {
+  stroke-width: 0.3px;
+  stroke: #ffbbbb; }
 #irc .relation .active-nicks text.title {
   font-size: 5px;
   fill: black;

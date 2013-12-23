@@ -68,7 +68,7 @@
       option(ng-repeat="n in nodes",ng-attr-value="{{n.name}}") {{n.name}}
     svg(width="100%",height="100%",viewbox="0 0 300 200",preserveAspectRatio="xMidYMid")
       g(transform="translate(10 0)")
-        g.graph(transform="translate(0 0)")
+        //-g.graph(transform="translate(0 0)")
           line(ng-repeat="n in links",
             ng-attr-x1="{{n.source.x}}",ng-attr-y1="{{n.source.y}}",
             ng-attr-x2="{{n.target.x}}",ng-attr-y2="{{n.target.y}}")
@@ -79,7 +79,7 @@
         g.active-nicks(transform="translate(35 35)")
           text.title 活躍人物列表
           g(ng-repeat="n in nodesActive")
-            line(ng-attr-x1="{{10}}",ng-attr-y1="{{$index*5+7}}",ng-attr-x2="{{n.x - 35 - n.r}}",ng-attr-y2="{{n.y - 35}}",ng-show="n.hover")
+            line(ng-attr-x1="{{10}}",ng-attr-y1="{{$index*5+7}}",ng-attr-x2="{{n.x - 35 - n.r}}",ng-attr-y2="{{n.y - 35}}",ng-class="hover.near(n)")
             text.name(ng-attr-y="{{$index*5+7}}",ng-mouseover="hover.set(n)",ng-mouseout="hover.set(null)") {{n.name}} ( {{n.charge}} )
         g(transform="translate(30 20)")
           text.title 對話關係圖

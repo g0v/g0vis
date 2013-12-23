@@ -24,7 +24,7 @@ ircCtrl = function($scope, $http, $element){
     },
     color: d3.scale.category20()
   });
-  return $http.get('g0v-count.json').success(function(data){
+  return $http.get('http://kcwu.csie.org/~kcwu/ircstat/g0v-count.json').success(function(data){
     $scope.$broadcast('data.ready', data);
     return console.log(data);
   });
@@ -190,13 +190,13 @@ ircRelationCtrl = function($scope, $element){
     }
   });
   return $scope.$on('data.ready', function(e, data){
-    var ref$, w, h, force, hash, it, it2, jt, nodes, links, i$, len$, j$, ref1$, x, len1$;
+    var ref$, w, h, force, hash, it, it2, jt, nodes, links, i$, len$, j$, x, len1$;
     ref$ = [300, 200], w = ref$[0], h = ref$[1];
     data = data.by_nick_to;
     force = d3.layout.force();
     hash = {};
     for (it in data) {
-      it2 = it.toLowerCase();
+      it2 = it.toLowerCase().trim();
       for (jt in data[it]) {
         jt = jt.toLowerCase().trim();
         if (!(jt in hash)) {
@@ -234,7 +234,7 @@ ircRelationCtrl = function($scope, $element){
     links = [];
     for (i$ = 0, len$ = nodes.length; i$ < len$; ++i$) {
       it = nodes[i$];
-      for (j$ = 0, len1$ = (ref$ = [(ref1$ = (fn$()).sort(fn1$))[0], ref1$[1], ref1$[2]]).length; j$ < len1$; ++j$) {
+      for (j$ = 0, len1$ = (ref$ = (fn$()).sort(fn1$)).length; j$ < len1$; ++j$) {
         jt = ref$[j$];
         if (!jt) {
           continue;
@@ -251,10 +251,10 @@ ircRelationCtrl = function($scope, $element){
     nodes.map(function(it){
       var ref$;
       it.v = it.charge;
-      return it.r = (ref$ = Math.sqrt(it.charge)) > 1 ? ref$ : 1;
+      return it.r = (ref$ = Math.pow(it.charge, 1.2) / 40) > 1 ? ref$ : 1;
     });
     force.nodes(nodes).links(links).size([300, 170]).gravity(3.5).charge(function(it){
-      return -Math.pow(it.charge, 2) - 30;
+      return -Math.pow(it.charge, 1.5) - 10;
     }).start();
     $scope.nodes = nodes;
     $scope.nodesActive = [

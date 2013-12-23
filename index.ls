@@ -10,7 +10,8 @@ ircCtrl = ($scope, $http, $element) ->
     panel: 2
     set-panel: (d) -> $scope.panel = ($scope.panel + d + 3)%3
     color: d3.scale.category20!
-  $http.get \g0v-count.json .success (data)->
+  #$http.get \g0v-count.json .success (data) ->
+  $http.get \http://kcwu.csie.org/~kcwu/ircstat/g0v-count.json .success (data) ->
     $scope.$broadcast \data.ready, data
     console.log data
 
@@ -111,16 +112,16 @@ ircRelationCtrl = ($scope, $element) ->
   force = d3.layout.force!
   hash = {}
   for it of data
-    it2 = it.toLowerCase!
+    it2 = it.toLowerCase!trim!
     for jt of data[it] =>
       jt = jt.toLowerCase!trim!
       if not (jt of hash) => hash[jt] = {name: jt, charge: 1}
     hash[it2] = {name: it2, d: data[it], charge: 1}
-  nodes = [it for it of hash]map (d,i) -> hash[d].index = i; hash[d]
+  nodes = [it for it of hash]map (d,i) -> hash[d]index = i; hash[d]
   nodes.sort (a,b) -> if a.name > b.name => 1 else if a.name==b.name => 0 else -1
   links = []
   for it in nodes
-    for jt in [x for x of it.d]sort((a,b) -> it.d[a] - it.d[b])[0 to 2]
+    for jt in [x for x of it.d]sort((a,b) -> it.d[a] - it.d[b])#[0 to 2] : for smaller data set
       continue if not jt
       jt = jt.toLowerCase!trim!
       links.push source: hash[it.name], target: hash[jt]
@@ -128,8 +129,9 @@ ircRelationCtrl = ($scope, $element) ->
   $scope.links = links
   nodes.map ->
     it.v = it.charge
-    it.r = (Math.sqrt it.charge)>?1
-  force.nodes nodes .links links .size [300 170] .gravity 3.5 .charge(-> -(it.charge**2) - 30)start!
+    it.r = (it.charge ** 1.2)/40>?1
+    #it.r = (Math.sqrt it.charge /3)>?1
+  force.nodes nodes .links links .size [300 170] .gravity 3.5 .charge(-> -(it.charge**1.5) - 10)start!
   $scope.nodes = nodes
   $scope.nodes-active = nodes.filter(-> it.charge>5)sort((a,b) -> b.charge - a.charge)[0 to 20]
   $scope.hover = do

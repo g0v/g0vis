@@ -128,15 +128,12 @@
             <svg width="100%" height="100%" viewbox="0 0 300 200" preserveAspectRatio="xMidYMid">
               <g transform="translate(10 0)">
                 <g transform="translate(0 0)" class="graph">
-                  <line ng-repeat="n in links" ng-attr-x1="{{n.source.x}}" ng-attr-y1="{{n.source.y}}" ng-attr-x2="{{n.target.x}}" ng-attr-y2="{{n.target.y}}"></line>
-                </g>
-                <g transform="translate(0 0)" class="graph">
                   <circle ng-repeat="n in nodes" ng-attr-r="{{n.r}}" ng-attr-fill="{{color(n)}}" ng-attr-cx="{{n.x}}" ng-attr-cy="{{n.y}}" ng-class="hover.near(n)" ng-mouseover="hover.set(n)" ng-mouseout="hover.set(null)"></circle>
                 </g>
                 <g transform="translate(35 35)" class="active-nicks">
                   <text class="title">活躍人物列表</text>
                   <g ng-repeat="n in nodesActive">
-                    <line ng-attr-x1="{{10}}" ng-attr-y1="{{$index*5+7}}" ng-attr-x2="{{n.x - 35 - n.r}}" ng-attr-y2="{{n.y - 35}}" ng-show="n.hover"></line>
+                    <line ng-attr-x1="{{10}}" ng-attr-y1="{{$index*5+7}}" ng-attr-x2="{{n.x - 35 - n.r}}" ng-attr-y2="{{n.y - 35}}" ng-class="hover.near(n)"></line>
                     <text ng-attr-y="{{$index*5+7}}" ng-mouseover="hover.set(n)" ng-mouseout="hover.set(null)" class="name">{{n.name}} ( {{n.charge}} )</text>
                   </g>
                 </g>
