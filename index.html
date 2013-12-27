@@ -41,10 +41,12 @@
         <!--iframe(src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&font=Bevan-PotanoSans&maptype=toner&lang=zh-tw&height=650",width="100%",height="650",frameborder="0")-->
       </div>
       <div id="project" ng-show="tab=='project'" ng-controller="prjCtrl">
-        <div ng-repeat="p in projects" style="border:1px solid #000;border-radius:10px;margin:10px;width:300px;float:left;overflow:hidden">
-          <div style="margin:3px;text-align:center;">{{p.name}}</div>
-          <div style="margin:3px;text-align:center;"><a href="{{p.homepage}}">link</a></div>
-          <div style="background:url(img/{{nameToUrl(p.name)}}.jpg) no-repeat center center;width:300px;height:225px"></div>
+        <div class="list">
+          <h1>g0v 促成的專案有哪些？</h1><a href="http://{{p.homepage}}#">
+            <div ng-repeat="p in projects" class="item">
+              <div ng-attr-style="background-image:url(img/{{nameToUrl(p.name)}}.jpg)" class="snapshot"></div>
+              <div class="name">{{p.name_zh || p.name}}</div>
+            </div></a>
         </div>
       </div>
       <div id="irc" ng-show="tab=='irc'" ng-controller="ircCtrl">

@@ -1,5 +1,7 @@
 #project(ng-show="tab=='project'",ng-controller="prjCtrl")
-  div(ng-repeat="p in projects",style="border:1px solid #000;border-radius:10px;margin:10px;width:300px;float:left;overflow:hidden")
-    div(style="margin:3px;text-align:center;") {{p.name}}
-    div(style="margin:3px;text-align:center;"): a(href="{{p.homepage}}") link
-    div(style="background:url(img/{{nameToUrl(p.name)}}.jpg) no-repeat center center;width:300px;height:225px")
+  .list
+    h1 g0v 促成的專案有哪些？
+    a(href="http://{{p.homepage}}#")
+      .item(ng-repeat="p in projects")
+        .snapshot(ng-attr-style="background-image:url(img/{{nameToUrl(p.name)}}.jpg)")
+        .name {{p.name_zh || p.name}}
