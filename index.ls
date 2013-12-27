@@ -6,6 +6,7 @@ mainCtrl = ($scope, $http) ->
     set-tab: -> $scope.tab = it
 
 prjCtrl = ($scope, $http, $element) ->
+  $scope.name-to-url = -> it.replace " ",\_
   $http.get \g0v-project.json .success (data) ->
     console.log data
     $scope.projects = data

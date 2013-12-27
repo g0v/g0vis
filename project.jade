@@ -2,4 +2,4 @@
   div(ng-repeat="p in projects",style="border:1px solid #000;border-radius:10px;margin:10px;width:300px;float:left;overflow:hidden")
     div(style="margin:3px;text-align:center;") {{p.name}}
     div(style="margin:3px;text-align:center;"): a(href="{{p.homepage}}") link
-    div(style="background:url(img/{{p.name}}.png) no-repeat center center;width:300px;height:225px")
+    div(style="background:url(img/{{nameToUrl(p.name)}}.jpg) no-repeat center center;width:300px;height:225px")

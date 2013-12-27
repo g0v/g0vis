@@ -17,6 +17,9 @@ mainCtrl = function($scope, $http){
   });
 };
 prjCtrl = function($scope, $http, $element){
+  $scope.nameToUrl = function(it){
+    return it.replace(" ", '_');
+  };
   return $http.get('g0v-project.json').success(function(data){
     console.log(data);
     return $scope.projects = data;
