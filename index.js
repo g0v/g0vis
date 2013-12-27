@@ -3,7 +3,7 @@ var mainCtrl, prjCtrl, ircCtrl, ircCountCtrl, ircCalendarCtrl, ircRelationCtrl;
 mainCtrl = function($scope, $http){
   return import$($scope, {
     tabs: [['about', '關於'], ['timeline', '時間軸'], ['project', '專案'], ['irc', '聊天室']],
-    tab: 'irc',
+    tab: 'project',
     tabClass: function(it){
       if ($scope.tab === it) {
         return 'active';
@@ -18,7 +18,8 @@ mainCtrl = function($scope, $http){
 };
 prjCtrl = function($scope, $http, $element){
   return $http.get('g0v-project.json').success(function(data){
-    return console.log(data);
+    console.log(data);
+    return $scope.projects = data;
   });
 };
 ircCtrl = function($scope, $http, $element){

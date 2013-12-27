@@ -1,13 +1,14 @@
 mainCtrl = ($scope, $http) ->
   $scope <<< do
     tabs: [<[about 關於]> <[timeline 時間軸]> <[project 專案]> <[irc 聊天室]>]
-    tab: \irc
+    tab: \project
     tab-class: -> if $scope.tab==it => \active else ""
     set-tab: -> $scope.tab = it
 
 prjCtrl = ($scope, $http, $element) ->
   $http.get \g0v-project.json .success (data) ->
     console.log data
+    $scope.projects = data
 
 ircCtrl = ($scope, $http, $element) ->
   $scope <<< do
