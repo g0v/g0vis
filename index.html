@@ -40,7 +40,7 @@
       <div id="timeline" ng-show="tab=='timeline'">
         <!--iframe(src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&font=Bevan-PotanoSans&maptype=toner&lang=zh-tw&height=650",width="100%",height="650",frameborder="0")-->
       </div>
-      <div id="project" ng-show="tab=='project'"></div>
+      <div id="project" ng-show="tab=='project'" ng-controller="prjCtrl"></div>
       <div id="irc" ng-show="tab=='irc'" ng-controller="ircCtrl">
         <div ng-click="setPanel(1)" class="next"></div>
         <div ng-click="setPanel(-1)" class="prev"></div>

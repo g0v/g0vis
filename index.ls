@@ -5,6 +5,10 @@ mainCtrl = ($scope, $http) ->
     tab-class: -> if $scope.tab==it => \active else ""
     set-tab: -> $scope.tab = it
 
+prjCtrl = ($scope, $http, $element) ->
+  $http.get \g0v-project.json .success (data) ->
+    console.log data
+
 ircCtrl = ($scope, $http, $element) ->
   $scope <<< do
     panel: 2
