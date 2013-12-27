@@ -7,6 +7,7 @@ jade = if fs.existsSync v=\node_modules/.bin/jade => v else \jade
 sass = if fs.existsSync v=\node_modules/.bin/sass => v else \sass
 cwd = path.resolve process.cwd!
 cwd-re = new RegExp RegExp.escape "#cwd#{if cwd[* - 1]=='/' => "" else \/}"
+if process.env.OS=="Windows_NT" => [jade,sass,ls] = [jade,sass,ls]map -> it.replace /\//g,\\\
 
 ignore-list = [/^server.ls$/, /^library.jade$/, /^\.[^/]+/, /^node_modules\//,/^assets\//]
 ignore-func = (f) -> ignore-list.filter(-> it.exec f.replace(cwd-re, "")replace(/^\.\/+/, ""))length
