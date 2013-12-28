@@ -1,7 +1,11 @@
 #project(ng-show="tab=='project'",ng-controller="prjCtrl")
   .list
-    h1 g0v 促成的專案有哪些？
+    h1 
+      img(src="img/g0v.png")
+      | 促成的專案有哪些？
     a(ng-repeat="p in projects",href="http://{{p.homepage}}#")
       .item
+        
         .snapshot(ng-attr-style="background-image:url(img/{{p.img}})")
-        .name {{p.name}}
+        .desc
+          h3 {{p.name}}

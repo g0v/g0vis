@@ -8,74 +8,74 @@ mainCtrl = ($scope, $http) ->
 prjCtrl = ($scope, $http, $element) ->
   $scope.name-to-url = -> it.replace " ",\_
   $scope.projects = [
-    * name: \社會資訊運動平台
-      homepage: \http://movement.ee.ncku.edu.tw/
-      source: \https://github.com/4movement/movement
-      img: \movement.jpg
-    * name: \中央政府總預算
-      homepage: \//budget.g0v.tw/
-      source: \https://github.com/g0v/twbudget
-      img: \budget.jpg
-    * name: \聾通訊
-      homepage: \https://play.google.com/store/apps/details?id=edu.stu.ihelp.client&hl=en
-      source: \https://github.com/cy-project/iHelp-android
-      img: \ihelp.jpg
     * name: \鄉民關心你
-      homepage: \http://kuansim.herokuapp.com
+      homepage: \http://kuansim.herokuapp.com/
       source: \https://github.com/g0v/kuansim
       img: \kuansim.jpg
-    * name: \法律亦毒氣
-      homepage: \http://laweasyread.herokuapp.com/"
-      source: \https://github.com/g0v/laweasyread
-      img: \lawEasyRead.jpg
-    * name: \福利請聽
-      homepage: \http://listening.g0v.tw
-      source: \https://github.com/g0v/listening
-      img: \listening.jpg
-    * name: \立委聯絡資訊
-      homepage: \http://billy3321.github.io/lytel/
-      source: \https://github.com/g0v/ly-tel/
-      img: \ly-tel.jpg
     * name: \萌典
-      homepage: \http://moedict.tw
+      homepage: \http://moedict.tw/
       source: <[
         https://github.com/g0v/moedict-process
         https://github.com/yllan/moedict-mac
         https://github.com/racklin/moedict-jquery-plugin
       ]>
       img: \moedict.jpg
-    * name: \新聞小幫手
-      homepage: \http://newshelper.g0v.tw
-      source: \https://github.com/g0v/newshelper-backend
-      img: \newshelper-backend.jpg
     * name: \政誌
-      homepage: \http://fact.g0v.tw
+      homepage: \http://fact.g0v.tw/
       source: \https://github.com/g0v/twangry
       img: \fact.jpg
+    * name: \求職小幫手
+      homepage: \http://jobhelper.g0v.ronny.tw/
+      source: \https://github.com/ronnywang/jobhelper
+      img: \jobhelper.jpg
+    * name: \新聞小幫手
+      homepage: \http://newshelper.g0v.tw/
+      source: \https://github.com/g0v/newshelper-backend
+      img: \newshelper-backend.jpg
+    * name: \社會資訊運動平台
+      homepage: \http://movement.ee.ncku.edu.tw/
+      source: \https://github.com/4movement/movement
+      img: \movement.jpg
     * name: \台灣行政區視覺化
       homepage: \http://g0v.github.io/twgeojson/
       source: \https://github.com/g0v/twgeojson/
       img: \twgeojson.jpg
     * name: "Pet Need Me"
-      homepage: \http://petneed.me
+      homepage: \http://petneed.me/
       source: \https://github.com/jsleetw/petneed.me
       img: \petneedme.jpg
-    * name: "Bad Driver"
-      homepage: \http://baddriver.mobileweb.com.tw
-      source: ""
-      img: \baddriver.jpg
-    * name: "國會大代誌"
-      homepage: \http://ly.g0v.tw
-      source: \https://github.com/g0v/ly.g0v.tw
-      img: \ly.g0v.tw.jpg
-    * name: "立院影城"
-      homepage: \http://ivod.ly.g0v.tw
+    * name: \福利請聽
+      homepage: \http://listening.g0v.tw/
+      source: \https://github.com/g0v/listening
+      img: \listening.jpg
+    * name: \中央政府總預算
+      homepage: \//budget.g0v.tw/
+      source: \https://github.com/g0v/twbudget
+      img: \budget.jpg
+    * name: \立院影城
+      homepage: \http://ivod.ly.g0v.tw/
       source: \https://github.com/g0v/ivod.ly.g0v.tw
       img: \ivod.jpg
-    * name: "求職小幫手"
-      homepage: \http://jobhelper.g0v.ronny.tw/
-      source: \https://github.com/ronnywang/jobhelper
-      img: \jobhelper.jpg
+    * name: \國會大代誌
+      homepage: \http://ly.g0v.tw/
+      source: \https://github.com/g0v/ly.g0v.tw
+      img: \ly.g0v.tw.jpg
+    * name: \聾通訊
+      homepage: \https://play.google.com/store/apps/details?id=edu.stu.ihelp.client&hl=en
+      source: \https://github.com/cy-project/iHelp-android
+      img: \ihelp.jpg
+    * name: \法律亦毒氣
+      homepage: \http://laweasyread.herokuapp.com/
+      source: \https://github.com/g0v/laweasyread
+      img: \lawEasyRead.jpg
+    * name: \立委聯絡資訊
+      homepage: \http://billy3321.github.io/lytel/
+      source: \https://github.com/g0v/ly-tel/
+      img: \ly-tel.jpg
+    * name: "Bad Driver"
+      homepage: \http://baddriver.mobileweb.com.tw/
+      source: ""
+      img: \baddriver.jpg
   ]
   console.log $scope.projects
 
