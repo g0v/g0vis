@@ -20,8 +20,23 @@ prjCtrl = function($scope, $http, $element){
   $scope.nameToUrl = function(it){
     return it.replace(" ", '_');
   };
+  $scope.projects = [
+    {
+      name: '社會資訊運動平台',
+      homepage: 'http://movement.ee.ncku.edu.tw/',
+      img: 'movement.jpg'
+    }, {
+      name: '中央政府總預算',
+      homepage: '//budget.g0v.tw/',
+      img: 'budget.jpg'
+    }, {
+      name: '聾通訊',
+      homepage: 'https://play.google.com/store/apps/details?id=edu.stu.ihelp.client&hl=en',
+      img: 'ihelp.jpg'
+    }
+  ];
+  console.log($scope.projects);
   return $http.get('g0v-project.json').success(function(data){
-    console.log(data);
     return $scope.projects = data;
   });
 };
