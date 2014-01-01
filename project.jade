@@ -3,7 +3,7 @@
     h1 
       img(src="img/g0v.png")
       | 促成的專案有哪些？
-    a(ng-repeat="p in projects",href="http://{{p.homepage}}#")
+    a(ng-repeat="p in projects",href="{{p.homepage}}")
       .item
         
         .snapshot(ng-attr-style="background-image:url(img/{{p.img}})")
