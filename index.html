@@ -42,7 +42,7 @@
       </div>
       <div id="project" ng-show="tab=='project'" ng-controller="prjCtrl">
         <div class="list">
-          <h1> <img src="img/g0v.png">促成的專案有哪些？</h1><a ng-repeat="p in projects" href="http://{{p.homepage}}#">
+          <h1> <img src="img/g0v.png">促成的專案有哪些？</h1><a ng-repeat="p in projects" href="{{p.homepage}}">
             <div class="item">
               <div ng-attr-style="background-image:url(img/{{p.img}})" class="snapshot"></div>
               <div class="desc">
