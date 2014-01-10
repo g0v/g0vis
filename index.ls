@@ -36,8 +36,8 @@ prjCtrl = ($scope, $http, $element) ->
       homepage: \http://movement.ee.ncku.edu.tw/
       source: \https://github.com/4movement/movement
       img: \movement.jpg
-    * name: \台灣行政區視覺化
-      homepage: \http://g0v.github.io/twgeojson/
+    * name: \空氣品質即時指標
+      homepage: \http://g0v.github.io/twgeojson/air.html
       source: \https://github.com/g0v/twgeojson/
       img: \twgeojson.jpg
     * name: "Pet Need Me"
