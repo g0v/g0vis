@@ -1,5 +1,7 @@
 #project(ng-show="tab=='project'",ng-controller="prjCtrl")
-  .list
+  .next(ng-click="setPanel(1)")
+  .prev(ng-click="setPanel(-1)")
+  .list(ng-show="panel==0"): .ib
     h1 
       img(src="img/g0v.png")
       | 促成的專案有哪些？
@@ -9,3 +11,5 @@
         .snapshot(ng-attr-style="background-image:url(img/{{p.img}})")
         .desc
           h3 {{p.name}}
+  .detail(ng-show="panel==1"): .ib(ng-controller="prjDetailCtrl")
+    | test

@@ -5,7 +5,12 @@ mainCtrl = ($scope, $http) ->
     tab-class: -> if $scope.tab==it => \active else ""
     set-tab: -> $scope.tab = it
 
+prjDetailCtrl = ($scope) ->
+
 prjCtrl = ($scope, $http, $element) ->
+  $scope <<< do
+    panel: 0
+    set-panel: (d) -> $scope.panel = ($scope.panel + d + 2)%2
   $scope.name-to-url = -> it.replace " ",\_
   $scope.projects = [
     * name: \鄉民關心你

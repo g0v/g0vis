@@ -41,14 +41,21 @@
         <iframe src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&amp;font=Bevan-PotanoSans&amp;maptype=toner&amp;lang=zh-tw&amp;height=650" width="100%" height="650" frameborder="0"></iframe>
       </div>
       <div id="project" ng-show="tab=='project'" ng-controller="prjCtrl">
-        <div class="list">
-          <h1> <img src="img/g0v.png">促成的專案有哪些？</h1><a ng-repeat="p in projects" href="{{p.homepage}}">
-            <div class="item">
-              <div ng-attr-style="background-image:url(img/{{p.img}})" class="snapshot"></div>
-              <div class="desc">
-                <h3>{{p.name}}</h3>
-              </div>
-            </div></a>
+        <div ng-click="setPanel(1)" class="next"></div>
+        <div ng-click="setPanel(-1)" class="prev"></div>
+        <div ng-show="panel==0" class="list">
+          <div class="ib">
+            <h1><img src="img/g0v.png">促成的專案有哪些？</h1><a ng-repeat="p in projects" href="{{p.homepage}}">
+              <div class="item">
+                <div ng-attr-style="background-image:url(img/{{p.img}})" class="snapshot"></div>
+                <div class="desc">
+                  <h3>{{p.name}}</h3>
+                </div>
+              </div></a>
+          </div>
+        </div>
+        <div ng-show="panel==1" class="detail">
+          <div ng-controller="prjDetailCtrl" class="ib">test</div>
         </div>
       </div>
       <div id="irc" ng-show="tab=='irc'" ng-controller="ircCtrl">
@@ -117,7 +124,7 @@
                   <text ng-attr-x="{{hover.cur.tx}}" y="60">{{hover.cur.d}} x {{hover.cur.v}} 人</text>
                   <text ng-attr-x="{{hover.cur.tx}}" y="65">{{hover.cur.event}}</text>
                 </g>
-                <g transform="translate(0 70)"> 
+                <g transform="translate(0 70)">
                   <rect x="1" y="-1" width="282" height="22" class="grid"></rect>
                   <line ng-repeat="y in [0,5,10,15,20]" x1="2" x2="282" ng-attr-y1="{{y}}" ng-attr-y2="{{y}}" class="grid"></line>
                   <line ng-repeat="(k,v) in mHash" ng-attr-x1="{{v}}" ng-attr-x2="{{v}}" y1="0" y2="20" class="grid"></line>
