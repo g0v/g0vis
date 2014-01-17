@@ -5,11 +5,19 @@ mainCtrl = ($scope, $http) ->
     tab-class: -> if $scope.tab==it => \active else ""
     set-tab: -> $scope.tab = it
 
-prjDetailCtrl = ($scope) ->
+prjDetailCtrl = ($scope,$http) ->
+  console.log \ok
+  $scope.range = (a,b) -> [i for i from a to b]
+  $http.get \simple.json .success (data) ->
+    $scope.projects = []
+    for ,h of data
+      for k,v of h
+        v.key = k
+        $scope.projects.push v
 
 prjCtrl = ($scope, $http, $element) ->
   $scope <<< do
-    panel: 0
+    panel: 1
     set-panel: (d) -> $scope.panel = ($scope.panel + d + 2)%2
   $scope.name-to-url = -> it.replace " ",\_
   $scope.projects = [

@@ -16,10 +16,35 @@ mainCtrl = function($scope, $http){
     }
   });
 };
-prjDetailCtrl = function($scope){};
+prjDetailCtrl = function($scope, $http){
+  console.log('ok');
+  $scope.range = function(a, b){
+    var i$, i, results$ = [];
+    for (i$ = a; i$ <= b; ++i$) {
+      i = i$;
+      results$.push(i);
+    }
+    return results$;
+  };
+  return $http.get('simple.json').success(function(data){
+    var i$, h, lresult$, k, v, results$ = [];
+    $scope.projects = [];
+    for (i$ in data) {
+      h = data[i$];
+      lresult$ = [];
+      for (k in h) {
+        v = h[k];
+        v.key = k;
+        lresult$.push($scope.projects.push(v));
+      }
+      results$.push(lresult$);
+    }
+    return results$;
+  });
+};
 prjCtrl = function($scope, $http, $element){
   import$($scope, {
-    panel: 0,
+    panel: 1,
     setPanel: function(d){
       return $scope.panel = ($scope.panel + d + 2) % 2;
     }

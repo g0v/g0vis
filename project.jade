@@ -12,4 +12,23 @@
         .desc
           h3 {{p.name}}
   .detail(ng-show="panel==1"): .ib(ng-controller="prjDetailCtrl")
-    | test
+    h1 各專案的活躍程度？
+    h4 透過 google 搜尋 github.com 列出以有設置 g0v.json 的專案為主
+    hr
+    .item(ng-repeat="p in projects") 
+      .name {{p.name}}
+      h4 {{p.contributors.length}} 位主要開發者
+      .contributors
+        .contributor(ng-repeat="m in p.contributors") 
+          img(src="img/man.svg",ng-attr-style="width:{{m.total + 10}}px")
+          .user {{m.user}}
+      h4 各方貢獻的總數
+      .commits
+        .commit(ng-repeat="i in range(1,p.commits)"): img(src="img/hammer.svg")
+    hr
+    .about
+      | SVG Icon Attribution to following designer:
+      blockquote
+        a(href="http://thenounproject.com/term/man/13731/") "MAN" by Nina Machado
+        br
+        a(href="http://thenounproject.com/term/man/1306/") "Hammer" by John Caserta

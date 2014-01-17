@@ -147,20 +147,20 @@ html, body {
 #project .list {
   margin: 90px 30px;
   text-align: center; }
-#project .item {
+#project .list .item {
   margin: 1px;
   display: inline-block;
   position: relative;
   width: 300px;
   height: 225px;
   overflow: hidden; }
-  #project .item .desc {
+  #project .list .item .desc {
     color: #444444; }
-    #project .item .desc h3 {
+    #project .list .item .desc h3 {
       width: 100%;
       background: rgba(0, 0, 0, 0.1);
       padding: 7px; }
-  #project .item .snapshot, #project .item .desc {
+  #project .list .item .snapshot, #project .list .item .desc {
     position: absolute;
     top: 0;
     left: 0;
@@ -170,7 +170,7 @@ html, body {
     opacity: 1;
     transition: top 0.3s;
     -webkit-transition: top 0.3s; }
-  #project .item .desc {
+  #project .list .item .desc {
     top: -225px;
     padding: 10px;
     background: url(img/grid.jpg) fixed; }
@@ -180,3 +180,42 @@ html, body {
   top: 225px; }
 #project .item:hover .desc {
   top: 0; }
+
+.detail .ib {
+  margin: 60px 20px; }
+  .detail .ib h1, .detail .ib h4 {
+    text-align: center; }
+  .detail .ib .about {
+    margin: 20px;
+    padding: 20px; }
+    .detail .ib .about blockquote {
+      margin-top: 10px; }
+  .detail .ib .item:nth-child(2n+1) {
+    background-image: -webkit-linear-gradient(bottom, white 0%, #ffe9cd 100%); }
+  .detail .ib .item {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px 60px 80px;
+    border-top-right-radius: 100px;
+    border-top-left-radius: 100px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+    background-image: -webkit-linear-gradient(bottom, white 0%, #ffe9cd 100%); }
+    .detail .ib .item h4 {
+      text-shadow: 0 0 5px white; }
+    .detail .ib .item .name {
+      font-weight: 900;
+      font-size: 2.5em;
+      margin-bottom: 40px;
+      text-shadow: 0 2px 1px rgba(192, 172, 128, 0.8); }
+    .detail .ib .item .commit {
+      display: inline-block; }
+      .detail .ib .item .commit img {
+        width: 20px; }
+    .detail .ib .item .contributor {
+      margin: 20px;
+      text-align: center;
+      display: inline-block; }
+      .detail .ib .item .contributor img {
+        width: 20px; }
+      .detail .ib .item .contributor .user {
+        color: #009900; }
