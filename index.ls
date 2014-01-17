@@ -6,7 +6,6 @@ mainCtrl = ($scope, $http) ->
     set-tab: -> $scope.tab = it
 
 prjDetailCtrl = ($scope,$http) ->
-  console.log \ok
   $scope.range = (a,b) -> [i for i from a to b]
   $http.get \simple.json .success (data) ->
     $scope.projects = []
@@ -17,7 +16,7 @@ prjDetailCtrl = ($scope,$http) ->
 
 prjCtrl = ($scope, $http, $element) ->
   $scope <<< do
-    panel: 1
+    panel: 0
     set-panel: (d) -> $scope.panel = ($scope.panel + d + 2)%2
   $scope.name-to-url = -> it.replace " ",\_
   $scope.projects = [

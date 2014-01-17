@@ -17,7 +17,6 @@ mainCtrl = function($scope, $http){
   });
 };
 prjDetailCtrl = function($scope, $http){
-  console.log('ok');
   $scope.range = function(a, b){
     var i$, i, results$ = [];
     for (i$ = a; i$ <= b; ++i$) {
@@ -44,7 +43,7 @@ prjDetailCtrl = function($scope, $http){
 };
 prjCtrl = function($scope, $http, $element){
   import$($scope, {
-    panel: 1,
+    panel: 0,
     setPanel: function(d){
       return $scope.panel = ($scope.panel + d + 2) % 2;
     }
