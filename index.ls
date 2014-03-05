@@ -1,9 +1,11 @@
-mainCtrl = ($scope, $http) ->
+mainCtrl = ($scope, $http, $location) ->
   $scope <<< do
     tabs: [<[about 關於]> <[timeline 時間軸]> <[project 專案]> <[irc 聊天室]>]
     tab: \project
     tab-class: -> if $scope.tab==it => \active else ""
     set-tab: -> $scope.tab = it
+  hashtag = $location.path!replace(/^\//,"")
+  if hashtag in ($scope.tabs.map ->it.0) => $scope.tab = hashtag
 
 prjDetailCtrl = ($scope,$http) ->
   $scope.range = (a,b) -> [i for i from a to b]
