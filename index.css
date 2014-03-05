@@ -196,10 +196,7 @@ html, body {
     text-align: center;
     margin-bottom: 20px;
     padding: 20px 60px 80px;
-    border-top-right-radius: 100px;
-    border-top-left-radius: 100px;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-    background-image: -webkit-linear-gradient(bottom, white 0%, #ffe9cd 100%); }
+    width: 24%; }
     .detail .ib .item h4 {
       text-shadow: 0 0 5px white; }
     .detail .ib .item .name {

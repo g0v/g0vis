@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="assets/bootstrap/3.0.2/theme/bootstrap.yeti.min.css">
     <script type="text/javascript" src="assets/moment/2.4.0/moment.min.js"></script>
     <script type="text/javascript" src="assets/colorbrewer/colorbrewer.js"></script>
+    <script type="text/javascript" src="isotope.pkgd.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </head>
   <body ng-app ng-controller="mainCtrl">
@@ -45,7 +46,7 @@
         <div ng-click="setPanel(-1)" class="prev"></div>
         <div ng-show="panel==0" class="list">
           <div class="ib">
-            <h1> <img src="img/g0v.png">促成的專案有哪些？</h1><a ng-repeat="p in projects" href="{{p.homepage}}">
+            <h1><img src="img/g0v.png">促成的專案有哪些？</h1><a ng-repeat="p in projects" href="{{p.homepage}}">
               <div class="item">
                 <div ng-attr-style="background-image:url(img/{{p.img}})" class="snapshot"></div>
                 <div class="desc">
@@ -59,11 +60,11 @@
             <h1>各專案的活躍程度？</h1>
             <h4>透過 google 搜尋 github.com 列出以有設置 g0v.json 為主的專案</h4>
             <hr>
-            <div ng-repeat="p in projects" class="item"> 
+            <div ng-repeat="p in projects" class="item">
               <div class="name">{{p.name}}</div>
               <h4>{{p.contributors.length}} 位主要開發者</h4>
               <div class="contributors">
-                <div ng-repeat="m in p.contributors" class="contributor"> <img src="img/man.svg" ng-attr-style="width:{{m.total + 10}}px;max-width:100%">
+                <div ng-repeat="m in p.contributors" class="contributor"><img src="img/man.svg" ng-attr-style="width:{{m.total + 10}}px;max-width:100%">
                   <div class="user">{{m.user}}</div>
                 </div>
               </div>
@@ -145,7 +146,7 @@
                   <text ng-attr-x="{{hover.cur.tx}}" y="60">{{hover.cur.d}} x {{hover.cur.v}} 人</text>
                   <text ng-attr-x="{{hover.cur.tx}}" y="65">{{hover.cur.event}}</text>
                 </g>
-                <g transform="translate(0 70)"> 
+                <g transform="translate(0 70)">
                   <rect x="1" y="-1" width="282" height="22" class="grid"></rect>
                   <line ng-repeat="y in [0,5,10,15,20]" x1="2" x2="282" ng-attr-y1="{{y}}" ng-attr-y2="{{y}}" class="grid"></line>
                   <line ng-repeat="(k,v) in mHash" ng-attr-x1="{{v}}" ng-attr-x2="{{v}}" y1="0" y2="20" class="grid"></line>

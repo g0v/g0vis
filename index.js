@@ -43,7 +43,7 @@ prjDetailCtrl = function($scope, $http){
 };
 prjCtrl = function($scope, $http, $element){
   import$($scope, {
-    panel: 0,
+    panel: 1,
     setPanel: function(d){
       return $scope.panel = ($scope.panel + d + 2) % 2;
     }

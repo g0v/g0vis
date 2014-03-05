@@ -16,7 +16,7 @@ prjDetailCtrl = ($scope,$http) ->
 
 prjCtrl = ($scope, $http, $element) ->
   $scope <<< do
-    panel: 0
+    panel: 1
     set-panel: (d) -> $scope.panel = ($scope.panel + d + 2)%2
   $scope.name-to-url = -> it.replace " ",\_
   $scope.projects = [
