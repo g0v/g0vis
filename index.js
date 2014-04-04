@@ -6,22 +6,22 @@ x$.config(function($routeProvider, $locationProvider){
   x$ = $routeProvider;
   x$.when('/project/:tabId', {
     name: 'project',
-    templateUrl: '/project.html',
+    templateUrl: 'project.html',
     controller: 'prjCtrl'
   });
   x$.when('/irc/:tabId', {
     name: 'irc',
-    templateUrl: '/irc.html',
+    templateUrl: 'irc.html',
     controller: 'ircCtrl'
   });
   x$.when('/timeline', {
     name: 'timeline',
-    templateUrl: '/timeline.html',
+    templateUrl: 'timeline.html',
     controller: 'prjCtrl'
   });
   x$.when('/about', {
     name: 'about',
-    templateUrl: '/about.html',
+    templateUrl: 'about.html',
     controller: 'aboutCtrl'
   });
   y$ = $locationProvider;

@@ -3,19 +3,19 @@ angular.module \g0vis, <[ngRoute]>
     $routeProvider
       ..when  \/project/:tabId, do
         name: \project
-        templateUrl: \/project.html
+        templateUrl: \project.html
         controller: \prjCtrl
       ..when  \/irc/:tabId, do
         name: \irc
-        templateUrl: \/irc.html
+        templateUrl: \irc.html
         controller: \ircCtrl
       ..when  \/timeline, do
         name: \timeline
-        templateUrl: \/timeline.html
+        templateUrl: \timeline.html
         controller: \prjCtrl
       ..when  \/about, do
         name: \about
-        templateUrl: \/about.html
+        templateUrl: \about.html
         controller: \aboutCtrl
     $location-provider
       ..html5-mode false
