@@ -34,7 +34,7 @@ angular.module \g0vis, <[ngRoute]>
       tab-class: -> if $scope.tab==it => \active else ""
       set-tab: -> $scope.tab = it
     $scope.$on \$routeChangeSuccess, (ev, data) -> 
-      $scope.set-tab data.$$route.name
+      if data.$$route => $scope.set-tab data.$$route.name
     #hashtag = $location.path!replace(/^\//,"")
     #if hashtag in ($scope.tabs.map ->it.0) => $scope.tab = hashtag
 

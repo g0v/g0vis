@@ -50,7 +50,9 @@ x$.controller('mainCtrl', ['$scope', '$http', '$location'].concat(function($scop
     }
   });
   return $scope.$on('$routeChangeSuccess', function(ev, data){
-    return $scope.setTab(data.$$route.name);
+    if (data.$$route) {
+      return $scope.setTab(data.$$route.name);
+    }
   });
 }));
 x$.controller('prjDetailCtrl', ['$scope', '$http'].concat(function($scope, $http){
