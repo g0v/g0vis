@@ -12,16 +12,22 @@
     <!-- custom files-->
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="stylesheet" type="text/css" href="assets/bootstrap/3.0.2/theme/bootstrap.yeti.min.css">
+    <script type="text/javascript" src="assets/angular/1.2.3/angular-route.js"></script>
     <script type="text/javascript" src="assets/moment/2.4.0/moment.min.js"></script>
     <script type="text/javascript" src="assets/colorbrewer/colorbrewer.js"></script>
     <script type="text/javascript" src="index.js"></script>
   </head>
-  <body ng-app ng-controller="mainCtrl">
+  <body ng-app="g0vis" ng-controller="mainCtrl">
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="ib">
         <div class="navbar-header"><a href="#" class="navbar-brand">G0VIS</a></div>
         <ul class="nav navbar-nav">
-          <li ng-repeat="n in tabs" ng-class="tabClass(n[0])"><a href="#" ng-click="setTab(n[0])">{{n[1]}}</a></li>
+          <li ng-repeat="n in tabs" ng-class="tabClass(n[0][0])"><a ng-attr-href="#!/{{n[0][0]}}" ng-if="n[1].length==0">{{n[0][1]}}</a><a href="#" data-toggle="dropdown" ng-if="n[1]" target="_self" class="dropdown-toggle">{{n[0][1]}}
+              <div class="caret"></div></a>
+            <ul ng-if="n[1]" class="dropdown-menu">
+              <li ng-repeat="x in n[1]"><a ng-attr-href="#!/{{n[0][0]}}/{{$index}}">{{x}}</a></li>
+            </ul>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#"><i class="glyphicon glyphicon-check"></i> 沒有人</a></li>
@@ -35,165 +41,6 @@
         </ul>
       </div>
     </div>
-    <div id="content">
-      <div id="about" ng-show="tab=='about'"></div>
-      <div id="timeline" ng-show="tab=='timeline'">
-        <iframe src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&amp;font=Bevan-PotanoSans&amp;maptype=toner&amp;lang=zh-tw&amp;height=650" width="100%" height="650" frameborder="0"></iframe>
-      </div>
-      <div id="project" ng-show="tab=='project'" ng-controller="prjCtrl">
-        <div ng-click="setPanel(1)" class="next"></div>
-        <div ng-click="setPanel(-1)" class="prev"></div>
-        <div ng-show="panel==0" class="list">
-          <div class="ib">
-            <h1> <img src="img/g0v.png">促成的專案有哪些？</h1><a ng-repeat="p in projects" href="{{p.homepage}}">
-              <div class="item">
-                <div ng-attr-style="background-image:url(img/{{p.img}})" class="snapshot"></div>
-                <div class="desc">
-                  <h3>{{p.name}}</h3>
-                </div>
-              </div></a>
-          </div>
-        </div>
-        <div ng-show="panel==1" class="detail">
-          <div ng-controller="prjDetailCtrl" class="ib">
-            <h1>各專案的活躍程度？</h1>
-            <h4>透過 google 搜尋 github.com 列出以有設置 g0v.json 為主的專案</h4>
-            <hr>
-            <div ng-repeat="p in projects" class="item"> 
-              <div class="name">{{p.name}}</div>
-              <h4>{{p.contributors.length}} 位主要開發者</h4>
-              <div class="contributors">
-                <div ng-repeat="m in p.contributors" class="contributor"> <img src="img/man.svg" ng-attr-style="width:{{m.total + 10}}px;max-width:100%">
-                  <div class="user">{{m.user}}</div>
-                </div>
-              </div>
-              <h4>各方貢獻的總數</h4>
-              <div class="commits">
-                <div ng-repeat="i in range(1,p.commits)" class="commit"><img src="img/hammer.svg"></div>
-              </div>
-            </div>
-            <hr>
-            <div class="about">SVG Icons Attribute to following designers:
-              <blockquote><a href="http://thenounproject.com/term/man/13731/">"MAN" by Nina Machado</a><br><a href="http://thenounproject.com/term/man/1306/">"Hammer" by John Caserta</a></blockquote>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="irc" ng-show="tab=='irc'" ng-controller="ircCtrl">
-        <div ng-click="setPanel(1)" class="next"></div>
-        <div ng-click="setPanel(-1)" class="prev"></div>
-        <div ng-show="panel==0" class="count">
-          <div ng-controller="ircCountCtrl" class="ib">
-            <svg width="100%" height="100%" viewbox="0 0 200 200" preserveAspectRatio="xMidYMid">
-              <g>
-                <text x="0" y="20" class="title">聊天室發言量</text>
-                <text x="0" y="30" class="subtitle">自 2012 年 11 月 5 日起</text>
-                <text x="0" y="35" class="subtitle">共 {{nick.length}} 人發言，累計 {{sum}} 句話</text>
-              </g>
-              <g>
-                <g ng-repeat="n in nick" transform="translate(20 0)" ng-mouseover="hover($event,n)">
-                  <circle ng-attr-cx="{{n.x||0}}" ng-attr-cy="{{n.y||0}}" ng-attr-r="{{n.r||0}}" ng-attr-fill="{{color(n.name)}}"></circle>
-                  <text ng-attr-x="{{n.x}}" ng-attr-y="{{n.y}}" ng-attr-font-size="{{n.r/n.name.length}}" ng-show="n.r/n.name.length&gt;0.7">{{n.name}}</text>
-                  <text ng-attr-x="{{n.x}}" ng-attr-y="{{n.y + 4}}" ng-attr-font-size="{{n.r/n.name.length/2}}" ng-show="n.r&gt;6&amp;&amp;n.r/n.name.length&gt;0.5">{{n.value}}</text>
-                </g>
-              </g>
-              <g ng-show="cur.y&gt;0" class="hint">
-                <line ng-attr-x1="{{cur.lx1||0}}" ng-attr-x2="{{cur.lx2||0}}" ng-attr-y1="{{cur.ly1||0}}" ng-attr-y2="{{cur.ly2||0}}" stroke="#777" stroke-dasharray="1 1" stroke-width="0.5px"></line>
-                <text ng-attr-x="{{cur.tx}}" ng-attr-y="{{cur.ty}}">{{cur.name}}</text>
-                <text ng-attr-x="{{cur.tx}}" ng-attr-y="{{cur.ty+5}}" style="font-size:2px">{{cur.value}}次發言</text>
-              </g>
-            </svg>
-          </div>
-        </div>
-        <div ng-show="panel==1" class="week">
-          <div ng-controller="ircCalendarCtrl" class="ib">
-            <svg width="100%" height="100%" viewbox="0 0 300 200" preserveAspectRatio="xMidYMid">
-              <defs>
-                <filter id="dropshadow" height="130%">
-                  <feGaussianBlur in="SourceAlpha" stdDeviation="0.05"></feGaussianBlur>
-                  <feOffset dx="0" dy="0.5" result="offsetblur"></feOffset>
-                  <feMerge>
-                    <feMergeNode></feMergeNode>
-                    <feMergeNode in="SourceGraphic"></feMergeNode>
-                  </feMerge>
-                </filter>
-                <linearGradient id="github-gradient" x1="0%" y1="0%" x2="0%" y2="100%" spreadMethod="pad">
-                  <stop offset="0%" stop-color="#F8231E" stop-opacity="1"></stop>
-                  <stop offset="50%" stop-color="#C5CC96" stop-opacity="1"></stop>
-                  <stop offset="100%" stop-color="#3E53F8" stop-opacity="1"></stop>
-                </linearGradient>
-              </defs>
-              <g transform="translate(30 20)">
-                <text class="title">聊天室每日概況</text>
-                <text x="40" class="subtitle left-align">自 {{dayFrom}} 至 {{dayTil}}，按周分類的每天發言量</text>
-              </g>
-              <g transform="translate(15 35)">
-                <g>
-                  <text ng-attr-y="{{$index * 7 + 5}}" x="-4" ng-repeat="w in th" class="week-label">{{w}}</text>
-                </g>
-                <g ng-repeat="d in date">
-                  <rect ng-attr-x="{{d.x}}" ng-attr-y="{{d.y}}" width="6px" height="6px" ng-attr-fill="{{heatColor(d.v)}}" ng-mouseover="hover.set(d)" ng-mouseout="hover.set(null)" class="heatblock"></rect>
-                </g>
-                <g ng-repeat="(k,v) in yHash" class="year-ptr">
-                  <text ng-attr-x="{{v + 3}}" y="-2">{{k}}</text>
-                </g>
-                <g ng-repeat="(k,v) in mHash" class="month-ptr">
-                  <text ng-attr-x="{{v + 3}}" y="53">{{k}}</text>
-                </g>
-                <g ng-show="hover.cur.v" class="hover">
-                  <line ng-attr-x1="{{hover.cur.x + 3}}" ng-attr-y1="{{hover.cur.y + 5}}" ng-attr-x2="{{hover.cur.tx}}" y2="57" stroke="#666" stroke-width="0.5px" stroke-dasharray="2 2"></line>
-                  <text ng-attr-x="{{hover.cur.tx}}" y="60">{{hover.cur.d}} x {{hover.cur.v}} 人</text>
-                  <text ng-attr-x="{{hover.cur.tx}}" y="65">{{hover.cur.event}}</text>
-                </g>
-                <g transform="translate(0 70)"> 
-                  <rect x="1" y="-1" width="282" height="22" class="grid"></rect>
-                  <line ng-repeat="y in [0,5,10,15,20]" x1="2" x2="282" ng-attr-y1="{{y}}" ng-attr-y2="{{y}}" class="grid"></line>
-                  <line ng-repeat="(k,v) in mHash" ng-attr-x1="{{v}}" ng-attr-x2="{{v}}" y1="0" y2="20" class="grid"></line>
-                  <line x1="282" x2="282" y1="0" y2="20" class="grid"></line>
-                  <path ng-attr-d="{{lineChart}}" stroke-width="0.5" fill="none" stroke="url(#github-gradient)"></path>
-                  <g ng-attr-transform="translate({{hover.cur.lx}} 0)" ng-show="hover.cur.v">
-                    <line x1="0" x2="0" y1="-1" y2="21" class="ptr"></line>
-                    <circle cx="0" ng-attr-cy="{{hover.cur.ly}}" r="1" class="ptr"></circle>
-                  </g>
-                  <text y="-5" class="subtitle">走勢圖</text>
-                </g>
-              </g>
-            </svg>
-          </div>
-        </div>
-        <div ng-show="panel==2" class="relation">
-          <div ng-controller="ircRelationCtrl" class="ib">
-            <svg width="100%" height="100%" viewbox="0 0 300 200" preserveAspectRatio="xMidYMid">
-              <g transform="translate(10 0)">
-                <g transform="translate(0 0)" class="graph">
-                  <circle ng-repeat="n in nodes" ng-attr-r="{{n.r}}" ng-attr-fill="{{color(n)}}" ng-attr-cx="{{n.x}}" ng-attr-cy="{{n.y}}" ng-class="hover.near(n)" ng-mouseover="hover.set(n)" ng-mouseout="hover.set(null)"></circle>
-                </g>
-                <g transform="translate(35 35)" class="active-nicks">
-                  <text class="title">活躍人物列表</text>
-                  <g ng-repeat="n in nodesActive">
-                    <line ng-attr-x1="{{10}}" ng-attr-y1="{{$index*5+7}}" ng-attr-x2="{{n.x - 35 - n.r}}" ng-attr-y2="{{n.y - 35}}" ng-class="hover.near(n)"></line>
-                    <text ng-attr-y="{{$index*5+7}}" ng-mouseover="hover.set(n)" ng-mouseout="hover.set(null)" class="name">{{n.name}} ( {{n.charge}} )</text>
-                  </g>
-                </g>
-                <g transform="translate(30 20)">
-                  <text class="title">對話關係圖</text>
-                  <text x="50" class="subtitle left-align">各別暱稱間的互動關係</text>
-                </g>
-                <g transform="translate(250 30)" ng-show="hover.cur" class="relate-nicks">
-                  <text class="title">{{hover.cur.name}}</text>
-                  <text y="6">與下面這些人對話過</text>
-                  <text ng-repeat="n in hover.neighbor" ng-attr-y="{{$index*5 + 12}}">{{n.name}}</text>
-                  <text y="117" ng-show="hover.neighbor.length&gt;20">and more...</text>
-                </g>
-              </g>
-            </svg>
-            <div class="irc-panel">
-              <div class="status">[nobody(+i)] [2:freenode.net/#g0v.tw(+s)] [Act: 9,10,12,<span style="color:#f09">17</span>,19,21]</div>
-              <div class="prompt">[#g0v.tw]</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div ng-view></div>
   </body>
 </html>

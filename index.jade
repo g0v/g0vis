@@ -12,16 +12,23 @@ html
     // custom files
     link(rel="stylesheet",type="text/css",href="index.css")
     link(rel="stylesheet",type="text/css",href="assets/bootstrap/3.0.2/theme/bootstrap.yeti.min.css")
+    script(type="text/javascript",src="assets/angular/1.2.3/angular-route.js")
     script(type="text/javascript",src="assets/moment/2.4.0/moment.min.js")
     script(type="text/javascript",src="assets/colorbrewer/colorbrewer.js")
     script(type="text/javascript",src="index.js")
-  body(ng-app, ng-controller="mainCtrl")
+  body(ng-app="g0vis", ng-controller="mainCtrl")
     .navbar.navbar-inverse.navbar-fixed-top
       .ib
         .navbar-header
           a.navbar-brand(href="#") G0VIS
         ul.nav.navbar-nav
-          li(ng-repeat="n in tabs",ng-class="tabClass(n[0])"): a(href="#",ng-click="setTab(n[0])") {{n[1]}}
+          li(ng-repeat="n in tabs",ng-class="tabClass(n[0][0])")
+            a(ng-attr-href="#!/{{n[0][0]}}",ng-if="n[1].length==0") {{n[0][1]}}
+            a.dropdown-toggle(href="#",data-toggle="dropdown",ng-if="n[1]",target="_self")
+              | {{n[0][1]}}
+              .caret
+            ul.dropdown-menu(ng-if="n[1]")
+              li(ng-repeat="x in n[1]"): a(ng-attr-href="#!/{{n[0][0]}}/{{$index}}") {{x}}
         ul.nav.navbar-nav.navbar-right
           li: a(href="#")
             i.glyphicon.glyphicon-check
@@ -36,10 +43,9 @@ html
               li: a(href="#")
                 i.glyphicon.glyphicon-log-out(style="float:right")
                 | 沒有人要登出
-
-    #content
-      #about(ng-show="tab=='about'")
-      #timeline(ng-show="tab=='timeline'")
-        iframe(src="http://embed.verite.co/timeline/?source=0AuVVq3srA7dPdFQtc3VQOUg0U1FZaVRYX09VeUMyU2c&font=Bevan-PotanoSans&maptype=toner&lang=zh-tw&height=650",width="100%",height="650",frameborder="0")
-      include project.jade
-      include irc.jade
+    div(ng-view)
+    //-
+      #content
+        #about(ng-show="tab=='about'")
+        include project.jade
+        include irc.jade
