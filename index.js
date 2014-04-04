@@ -24,6 +24,9 @@ x$.config(function($routeProvider, $locationProvider){
     templateUrl: 'about.html',
     controller: 'aboutCtrl'
   });
+  x$.otherwise({
+    redirectTo: '/project/0'
+  });
   y$ = $locationProvider;
   y$.html5Mode(false);
   y$.hashPrefix('!');

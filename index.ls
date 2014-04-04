@@ -17,6 +17,7 @@ angular.module \g0vis, <[ngRoute]>
         name: \about
         templateUrl: \about.html
         controller: \aboutCtrl
+      ..otherwise redirectTo: \/project/0
     $location-provider
       ..html5-mode false
       ..hash-prefix \! 
