@@ -36,7 +36,7 @@ x$.controller('nullCtrl', ['$scope'].concat(function($scope){}));
 x$.controller('aboutCtrl', ['$scope'].concat(function($scope){}));
 x$.controller('mainCtrl', ['$scope', '$http', '$location'].concat(function($scope, $http, $location){
   import$($scope, {
-    tabs: [[['about', '關於'], []], [['timeline', '時間軸'], []], [['project', '專案'], ['專案列表', '專案動態']], [['irc', '聊天室'], ['對話關係圖', '發言量', '月曆熱圖']]],
+    tabs: [[['about', '關於'], []], [['timeline', '時間軸'], []], [['project', '專案'], ['專案列表', '專案動態']], [['irc', '聊天室'], ['發言量', '月曆熱圖', '對話關係圖']]],
     tab: 'project',
     tabClass: function(it){
       if ($scope.tab === it) {

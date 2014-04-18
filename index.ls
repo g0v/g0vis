@@ -29,7 +29,7 @@ angular.module \g0vis, <[ngRoute]>
         * <[about 關於]>, []
         * <[timeline 時間軸]>, []
         * <[project 專案]>, <[專案列表 專案動態]>
-        * <[irc 聊天室]>, <[對話關係圖 發言量 月曆熱圖]>
+        * <[irc 聊天室]>, <[發言量 月曆熱圖 對話關係圖]>
       tab: \project
       tab-class: -> if $scope.tab==it => \active else ""
       set-tab: -> $scope.tab = it
