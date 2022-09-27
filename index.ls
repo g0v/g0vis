@@ -56,11 +56,11 @@ angular.module \g0vis, <[ngRoute]>
     $scope.name-to-url = -> it.replace " ",\_
     $scope.projects = [
       * name: \鄉民關心你
-        homepage: \http://kuansim.herokuapp.com/
+        homepage: \https://kuansim.herokuapp.com/
         source: \https://github.com/g0v/kuansim
         img: \kuansim.jpg
       * name: \萌典
-        homepage: \http://moedict.tw/
+        homepage: \https://moedict.tw/
         source: <[
           https://github.com/g0v/moedict-process
           https://github.com/yllan/moedict-mac
@@ -68,31 +68,31 @@ angular.module \g0vis, <[ngRoute]>
         ]>
         img: \moedict.jpg
       * name: \政誌
-        homepage: \http://fact.g0v.tw/
+        homepage: \https://fact.g0v.tw/
         source: \https://github.com/g0v/twangry
         img: \fact.jpg
       * name: \求職小幫手
-        homepage: \http://jobhelper.g0v.ronny.tw/
+        homepage: \https://jobhelper.g0v.ronny.tw/
         source: \https://github.com/ronnywang/jobhelper
         img: \jobhelper.jpg
       * name: \新聞小幫手
-        homepage: \http://newshelper.g0v.tw/
+        homepage: \https://newshelper.g0v.tw/
         source: \https://github.com/g0v/newshelper-backend
         img: \newshelper-backend.jpg
       * name: \社會資訊運動平台
-        homepage: \http://movement.ee.ncku.edu.tw/
+        homepage: \https://movement.ee.ncku.edu.tw/
         source: \https://github.com/4movement/movement
         img: \movement.jpg
       * name: \空氣品質即時指標
-        homepage: \http://g0v.github.io/twgeojson/air.html
+        homepage: \https://g0v.github.io/twgeojson/air.html
         source: \https://github.com/g0v/twgeojson/
         img: \twgeojson.jpg
       * name: "Pet Need Me"
-        homepage: \http://petneed.me/
+        homepage: \https://petneed.me/
         source: \https://github.com/jsleetw/petneed.me
         img: \petneedme.jpg
       * name: \福利請聽
-        homepage: \http://listening.g0v.tw/
+        homepage: \https://listening.g0v.tw/
         source: \https://github.com/g0v/listening
         img: \listening.jpg
       * name: \中央政府總預算
@@ -100,11 +100,11 @@ angular.module \g0vis, <[ngRoute]>
         source: \https://github.com/g0v/twbudget
         img: \budget.jpg
       * name: \立院影城
-        homepage: \http://ivod.ly.g0v.tw/
+        homepage: \https://ivod.ly.g0v.tw/
         source: \https://github.com/g0v/ivod.ly.g0v.tw
         img: \ivod.jpg
       * name: \國會大代誌
-        homepage: \http://ly.g0v.tw/
+        homepage: \https://ly.g0v.tw/
         source: \https://github.com/g0v/ly.g0v.tw
         img: \ly.g0v.tw.jpg
       * name: \聾通訊
@@ -112,15 +112,15 @@ angular.module \g0vis, <[ngRoute]>
         source: \https://github.com/cy-project/iHelp-android
         img: \ihelp.jpg
       * name: \法律亦毒氣
-        homepage: \http://laweasyread.herokuapp.com/
+        homepage: \https://laweasyread.herokuapp.com/
         source: \https://github.com/g0v/laweasyread
         img: \lawEasyRead.jpg
       * name: \立委聯絡資訊
-        homepage: \http://billy3321.github.io/lytel/
+        homepage: \https://billy3321.github.io/lytel/
         source: \https://github.com/g0v/ly-tel/
         img: \ly-tel.jpg
       * name: "Bad Driver"
-        homepage: \http://baddriver.mobileweb.com.tw/
+        homepage: \https://baddriver.mobileweb.com.tw/
         source: ""
         img: \baddriver.jpg
     ]
@@ -137,7 +137,7 @@ angular.module \g0vis, <[ngRoute]>
     $scope.params = $routeParams
     $scope.panel = $scope.params.tabId
     #$http.get \g0v-count.json .success (data) ->
-    $http.get \http://kcwu.csie.org/~kcwu/ircstat/g0v-count.json .success (data) ->
+    $http.get \https://kcwu.csie.org/~kcwu/ircstat/g0v-count.json .success (data) ->
       $scope.$broadcast \data.ready, data
       console.log data
 
